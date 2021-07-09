@@ -14,6 +14,8 @@ https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
 
 
 ESX = nil
+payMin = 3500
+payMax = 7000
 
 TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
@@ -22,13 +24,13 @@ AddEventHandler('grid:pay', function()
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
         if xPlayer ~= nil then
-            local randomMoney = math.random(3500,7000)
+            local randomMoney = math.random(payMin,payMax)
             xPlayer.addMoney(randomMoney)
             local cash = xPlayer.getMoney()
 		if randomMoney > 7000 then
-			print(source.identifier .. "may be cheating ....")
+			print(source.identifier .. " may be cheating ....")
 			return
-		end
+        end
             TriggerClientEvent('banking:updateCash', _source, cash)
             TriggerClientEvent('esx:showNotification', _source,'You were paid $'.. randomMoney)
         end
@@ -44,7 +46,7 @@ AddEventHandler('grid:verify', function()
         if item > 0 then
             TriggerClientEvent('esx:showNotification', _source,'Beginning Sabotage ...')
             xPlayer.removeInventoryItem(e, 1)
-	    TriggerClientEvent("grid:sabotage", _source)
+	        TriggerClientEvent("grid:sabotage", _source)
             return
         else
             TriggerClientEvent('esx:showNotification', _source,'You need more explosives ...')
