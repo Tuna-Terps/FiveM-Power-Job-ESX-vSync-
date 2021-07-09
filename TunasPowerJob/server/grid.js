@@ -1,3 +1,18 @@
+console.log(`
+:::::::::   ::::::::  :::       ::: :::::::::: :::::::::        :::::::::::  ::::::::  :::::::::                              
+:+:    :+: :+:    :+: :+:       :+: :+:        :+:    :+:           :+:     :+:    :+: :+:    :+:                             
++:+    +:+ +:+    +:+ +:+       +:+ +:+        +:+    +:+           +:+     +:+    +:+ +:+    +:+                             
++#++:++#+ +:+     +:+ +#+  +#+  +:+ +#+ +:+    +#++#++:++:          +#+     +#+    +:+ +#++:++#+         
++#+        +#+    +#+ +#+ +#+#+ +#+ +#+        +#+    +#+           +#+     +#+    +#+ +#+    +#+                             
+#+#        #+#    #+#  #+#+# #+#+#  #+#        #+#    #+#       #+# #+#     #+#    #+# #+#    #+#                             
+###         ########    ###   ###   ########## ###    ###        #####       ########  ########\n
+--------------------------------------------------------------------------------------------------------
+><> Created by Tuna Terps => If you enjoy the script, go ahead and check out some of my other work <3 !
+-------------------------------------------------------------------------------------------------------- 
+https://github.com/Tuna-Terps
+https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
+--------------------------------------------------------------------------------------------------------`);
+
 let ESX = null;
 let powerGrid = 1000;
 let blackout = false;
@@ -16,7 +31,7 @@ RegisterNetEvent("grid:sub")
 onNet('grid:sub', (amount) => {
     powerGrid -= amount;
     console.log(`The power grid is now at ${powerGrid} %`);
-    amount > 999 ? emitNet('esx:showNotification', -1, `💡💀 The Power Grid has been sabotaged !! 💀💡`) : emitNet('esx:showNotification', -1, `💡 *-*-The Power Grid is rapidly losing power !! 💡`);
+    amount > 999 ? emitNet('esx:showNotification', -1, `💡💀 The Power Grid has been sabotaged !! 💀💡`) : emitNet('esx:showNotification', -1, `💡 The Power Grid is rapidly losing power 💡`);
 })
 // ---------------------------------//loop for electric grid//--------------------------------------------------// 
 
@@ -24,75 +39,41 @@ setTick(async() => {
     emitNet('esx:showNotification', -1, `💡🔋 ${powerGrid} 🔋💡`);
     await Wait(20000);
     powerGrid--
-    emit('vSync:requestSync', CurrentWeather)
-    let CurrentWeather = CurrentWeather;
-    console.log(`${CurrentWeather} is the current weather ....`)
-
+    let cW = exports.vSync.weatherCb()
+    //console.log(`${cW} is the current weather ....`)
     //console.log(` Percentage: ${powerGrid} %`)
     await Wait(10)
     if (powerGrid >= 999){
         emitNet('esx:showNotification', -1, `💡🔋 The Power Grid is at full capacity !! 🔋💡`);
-        //console.log('power grid is at full capacity !')
-        var blackout = false;
-        var CurrentWeather = "SMOG";
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
-     //   return;
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)})   
     }
     else if (powerGrid <= 700 && powerGrid >= 600 ){
-        /*
         emitNet('esx:showNotification', -1, `💡🔌 The Power Grid is unstable, power surges are common !! 🔌💡`);
-        blackout = true;
-        CurrentWeather = "SMOG";
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(5000)
-        blackout = false;
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
-        */
-       emitNet('esx:showNotification', -1, `💡🔌 The Power Grid is unstable, power surges are common !! 🔌💡`);
-       var blackout = true;
-       //CurrentWeather = "SMOG";
-       emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
-       await Wait(5000)
-       var blackout = false;
-       emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
-     //   return;
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)})  
     }
     else if (powerGrid <= 500 && powerGrid >= 510) {     
         emitNet('esx:showNotification', -1, `💡🔌 The city is experiencing rolling blackouts !! 🔌💡`);
-        var blackout = true;
-        var CurrentWeather = "SMOG";
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(30000)
-        var blackout = false;
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
         await Wait(15000)
-        var blackout = true;
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(20000)
-        var blackout = false;
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
-     //   return;
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)})  
     }
     else if (powerGrid <= 400 && powerGrid >= 100) {
         emitNet('esx:showNotification', -1, `💡🔌 The Power Grid is failing !!🔌💡`);
-        var blackout = true;
-        var CurrentWeather = "SMOG";
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true) })  
         await Wait(30000)
-        var blackout = false;
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
-     //   return;
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false) })  
     }
     else if (powerGrid <= 99) {
         emitNet('esx:showNotification', -1, `💡🕯️ The Power Grid has ~r~collapsed ~w~!!🕯️💡`);
-        var blackout = true;
-        var CurrentWeather = "SMOG";
-        emitNet('vSync:updateWeather', -1, CurrentWeather, blackout)
-     //   return;
+        setImmediate(() => { emitNet('vSync:updateWeather', -1, cW, false) })
     }
-    //else return;
-     await Wait(1000)
-
+    await Wait(1000)
 })
 
 // ------------------------------------------//end of electric grid//--------------------------------------------------
@@ -108,51 +89,20 @@ setTick(async() => {
 // test the power system
 
 RegisterCommand('power', function(source, args){
-	console.log(args[0])
+    amount = parseInt(args[1], 10)
     if (!args[0]) return;
+    if (isNaN(amount)) return print('invalid argument, must be a number ....')
     if (IsPlayerAceAllowed(source, "mod")) {
         emit('esx:showNotification', source, 'Adjusting power grid levels ....')
-            if (args[0] == 'add') {
-                emit('grid:add', 100);
-                emit('esx:showNotification', source, 'Adjusting power grid levels ....');
-               // return;
-            }
-            else if (args[0] == 'sub') {
-                emit('grid:sub', 100);
-                emit('esx:showNotification', source, 'Adjusting power grid levels ....');
-              //  return;
-            }
-            else if (args[0] == 'sub9') {
-                emit('grid:sub', 95);
-                emit('esx:showNotification', source, 'Adjusting power grid levels ....');
-             //   return;
-            }
-            /*
-            else if (args[0] == 'pay') {
-                emitNet('grid:pay', source);
-                emit('esx:showNotification', source, 'Adjusting power grid levels ....');
-             //   return;
-            }
-            */
-
-        else print('you do not have the required permission ....');
-
+        if (args[0] == 'add') {
+            emit('grid:add', amount);
+            emit('esx:showNotification', source, 'Adjusting power grid levels ....');
+        }
+        else if (args[0] == 'sub') {
+            emit('grid:sub', amount);
+            emit('esx:showNotification', source, 'Adjusting power grid levels ....');
+        }
+    else return print('you do not have the required permission ....');
     }
-
 });
 
-// leave this if you wish to honor my existence <3
-console.log(`
-:::::::::   ::::::::  :::       ::: :::::::::: :::::::::        :::::::::::  ::::::::  :::::::::                              
-:+:    :+: :+:    :+: :+:       :+: :+:        :+:    :+:           :+:     :+:    :+: :+:    :+:                             
-+:+    +:+ +:+    +:+ +:+       +:+ +:+        +:+    +:+           +:+     +:+    +:+ +:+    +:+                             
-+#++:++#+ +:+     +:+ +#+  +#+  +:+ +#+ +:+    +#++#++:++:          +#+     +#+    +:+ +#++:++#+         
-+#+        +#+    +#+ +#+ +#+#+ +#+ +#+        +#+    +#+           +#+     +#+    +#+ +#+    +#+                             
-#+#        #+#    #+#  #+#+# #+#+#  #+#        #+#    #+#       #+# #+#     #+#    #+# #+#    #+#                             
-###         ########    ###   ###   ########## ###    ###        #####       ########  ########\n
---------------------------------------------------------------------------------------------------------
-><> Created by Tuna Terps => If you enjoy the script, go ahead and check out some of my other work <3 !
--------------------------------------------------------------------------------------------------------- 
-https://github.com/Tuna-Terps
-https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
---------------------------------------------------------------------------------------------------------`);
