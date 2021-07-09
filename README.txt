@@ -27,8 +27,14 @@ end)
 3b.) add server_export 'weatherCb'
 => to fxmanifest.lua
 
-4). Enjoy ! 
+4.) import importthis.sql to your database
+
+5.) add explosive.png to your esx_inventoryhud resource /html/img/
+
+6.) Adjust the uniforms in job.lua to match desired look (refer to video to honor my existance) 
  
+If done correctly; your Power Grid will be up and running !!
+
 -
 ** Features **
 1.) Power Job creates a grid that controls the city's power; As the power drains blackouts will become more frequent, until the grid collapses completely !
