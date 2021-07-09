@@ -88,7 +88,7 @@ setTick(async() => {
  */
 // test the power system
 
-RegisterCommand('power', function(source, args){
+RegisterCommand('power', function(source, args, amount){
     amount = parseInt(args[1], 10)
     if (!args[0]) return;
     if (isNaN(amount)) return print('invalid argument, must be a number ....')
@@ -96,11 +96,11 @@ RegisterCommand('power', function(source, args){
         emit('esx:showNotification', source, 'Adjusting power grid levels ....')
         if (args[0] == 'add') {
             emit('grid:add', amount);
-            emit('esx:showNotification', source, 'Adjusting power grid levels ....');
+            emitNet('esx:showNotification', source, 'Adjusting power grid levels ....');
         }
         else if (args[0] == 'sub') {
             emit('grid:sub', amount);
-            emit('esx:showNotification', source, 'Adjusting power grid levels ....');
+            emitNet('esx:showNotification', source, 'Adjusting power grid levels ....');
         }
     else return print('you do not have the required permission ....');
     }
