@@ -1,30 +1,33 @@
 # FiveM---Power-Job---ESX---vSync-
--
+><>
 No POWER no LIGHTS - An ESX job that must be maintained by the players ! 
--
+><>
 ** REQUIREMENTS ** 
--
+><>
 1.) vSync Weather Mod - https://forum.cfx.re/t/vsync-v1-4-0-simple-weather-and-time-sync/49710
 2.) mythic progbars -https://github.com/HalCroves/mythic_progbar
--
+><>
 ** TO GET STARTED **
 1.) Once downloaded, simply upload the TunasPowerJob folder into your /resource folder 
+><>
 2.) In server.cfg add start TunasPowerJob (VSYNC MUST START BEFORE POWERJOB; SO PLACE POWERJOB BELOW IT)
+><>
 3.) In your vSync mod we will make 2 additions, one in vs_server.lua & the fxmanifest.lua files (will work if youre using older __resource.lua)
 3a.) add -- TunasPowerJob - Add this to vs_server.lua ------------------------------
-
+><>
 exports('weatherCb', function(cB)
     cB = CurrentWeather
     return cB
 end)
-
+><>
 ------------------------------------------------------------------------
  => to sv_server.lua
+><>
 3b.) add server_export 'weatherCb'
 => to fxmanifest.lua
-
+><>
 4). Enjoy ! 
- 
+ ><>
 -
 ** Features **
 1.) Power Job creates a grid that controls the city's power; As the power drains blackouts will become more frequent, until the grid collapses completely !
