@@ -18,7 +18,7 @@ let powerGrid = 1000;
 let blackout = false;
 Wait = (ms) => new Promise(r => setTimeout(r, ms))
 
-emit("esx:getSharedObject", (obj) => ESX = obj);
+//emit("esx:getSharedObject", (obj) => ESX = obj);
 
 //-----------------------------------------------//events//---------------------------------------------------//
 
@@ -71,7 +71,7 @@ setTick(async() => {
     }
     else if (powerGrid <= 99) {
         emitNet('esx:showNotification', -1, `💡🕯️ The Power Grid has ~r~collapsed ~w~!!🕯️💡`);
-        setImmediate(() => { emitNet('vSync:updateWeather', -1, cW, false) })
+        setImmediate(() => { emitNet('vSync:updateWeather', -1, cW, true) })
     }
     await Wait(1000)
 })
@@ -88,18 +88,18 @@ setTick(async() => {
  */
 // test the power system
 
-RegisterCommand('power', function(source, args, amount){
-    amount = parseInt(args[1], 10)
+RegisterCommand('power', function(source, args, a){
+    a = parseInt(args[1], 10)
     if (!args[0]) return;
-    if (isNaN(amount)) return print('invalid argument, must be a number ....')
+    if (isNaN(a)) return print('invalid argument, must be a number ....')
     if (IsPlayerAceAllowed(source, "mod")) {
         emit('esx:showNotification', source, 'Adjusting power grid levels ....')
         if (args[0] == 'add') {
-            emit('grid:add', amount);
+            emit('grid:add', a);
             emitNet('esx:showNotification', source, 'Adjusting power grid levels ....');
         }
         else if (args[0] == 'sub') {
-            emit('grid:sub', amount);
+            emit('grid:sub', a);
             emitNet('esx:showNotification', source, 'Adjusting power grid levels ....');
         }
     else return print('you do not have the required permission ....');
