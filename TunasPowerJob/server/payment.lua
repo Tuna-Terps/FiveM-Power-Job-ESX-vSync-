@@ -39,7 +39,7 @@ end)
 RegisterNetEvent('grid:verify')
 AddEventHandler('grid:verify', function()
     local _source = source
-    local e = "thermal_charge"
+    local e = "explosive"
     local xPlayer = ESX.GetPlayerFromId(_source)
     if xPlayer ~= nil then
         local item = xPlayer.getInventoryItem(e)["count"]
