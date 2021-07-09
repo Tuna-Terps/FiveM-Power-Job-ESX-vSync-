@@ -10,7 +10,7 @@ No POWER no LIGHTS - An ESX job that must be maintained by the players !
 ** TO GET STARTED **
 1.) Once downloaded, simply upload the TunasPowerJob folder into your /resource folder 
 
-2.) In server.cfg add start TunasPowerJob (VSYNC MUST START BEFORE POWERJOB; SO PLACE POWERJOB BELOW IT)
+2.) In server.cfg add ensure TunasPowerJob (VSYNC MUST START BEFORE POWERJOB; SO PLACE POWERJOB BELOW IT)
 
 3.) In your vSync mod we will make 2 additions, one in vs_server.lua & the fxmanifest.lua files (will work if youre using older __resource.lua)
 
