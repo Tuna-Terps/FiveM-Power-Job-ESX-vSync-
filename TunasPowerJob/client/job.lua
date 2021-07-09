@@ -30,8 +30,6 @@ Citizen.CreateThread(function()
 		TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 		Citizen.Wait(0)
     end
-	PlayerData = ESX.GetPlayerData()
-
 end)
 
 
@@ -419,7 +417,7 @@ function ChangeClothes()
                 ['arms'] = 50,
                 ['pants_1'] = 48,   ['pants_2'] = 3,
                 ['shoes_1'] = 66,   ['shoes_2'] = 0,
-                ['helmet_1'] = 64,  ['helmet_2'] = 1,
+                ['helmet_1'] = 64,  ['helmet_2'] = 6,
                 ['chain_1'] = 0,    ['chain_2'] = 0,
                 ['bproof_1'] = 21,     ['bproof_2'] = 1							
             }
