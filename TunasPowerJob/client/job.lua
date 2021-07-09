@@ -26,9 +26,9 @@ local onHeist = nil
 -- ---------------------------------------------- loops --------------------------------------------
 
 Citizen.CreateThread(function()
-	while ESX == nil do
-		TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
-		Citizen.Wait(0)
+    while ESX == nil do
+	TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
+	Citizen.Wait(0)
     end
 	PlayerData = ESX.GetPlayerData()
 
@@ -38,8 +38,8 @@ end)
 -- track player coords
 Citizen.CreateThread(function()
     while true do
-		player = PlayerPedId()
-		coords = GetEntityCoords(player)
+	player = PlayerPedId()
+	coords = GetEntityCoords(player)
         Citizen.Wait(500)
     end
 end)
@@ -155,7 +155,7 @@ function startJob()
                         GridJob()
                         return
                    end
-           	end   
+           end   
         end
     end)
 end
