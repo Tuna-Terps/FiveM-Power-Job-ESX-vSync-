@@ -26,9 +26,9 @@ local onHeist = nil
 -- ---------------------------------------------- loops --------------------------------------------
 
 Citizen.CreateThread(function()
-    while ESX == nil do
-	TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
-	Citizen.Wait(0)
+	while ESX == nil do
+		TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
+		Citizen.Wait(0)
     end
 	PlayerData = ESX.GetPlayerData()
 
@@ -38,8 +38,8 @@ end)
 -- track player coords
 Citizen.CreateThread(function()
     while true do
-	player = PlayerPedId()
-	coords = GetEntityCoords(player)
+		player = PlayerPedId()
+		coords = GetEntityCoords(player)
         Citizen.Wait(500)
     end
 end)
@@ -155,7 +155,7 @@ function startJob()
                         GridJob()
                         return
                    end
-           end   
+           	end   
         end
     end)
 end
@@ -317,7 +317,7 @@ function Sabotage()
         		ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to plant bomb!", true, true, 5000)
             	if IsControlJustPressed(0,38) then
             		SabotageAnim()
-                    onHeist = false
+                    	onHeist = false
         		end
         	end
 		end
@@ -378,7 +378,8 @@ function SabotageAnim()
             onHeist = false
             return
         else
-            ClearPedTasksImmediately(PlayerPedId()) 
+            ClearPedTasksImmediately(PlayerPedId())
+	    TriggerServerEvent("grid:sub", 1000) 
             onHeist = false
             return
         end
@@ -418,7 +419,7 @@ function ChangeClothes()
                 ['arms'] = 50,
                 ['pants_1'] = 48,   ['pants_2'] = 3,
                 ['shoes_1'] = 66,   ['shoes_2'] = 0,
-                ['helmet_1'] = 29,  ['helmet_2'] = 2,
+                ['helmet_1'] = 64,  ['helmet_2'] = 1,
                 ['chain_1'] = 0,    ['chain_2'] = 0,
                 ['bproof_1'] = 21,     ['bproof_2'] = 1							
             }
