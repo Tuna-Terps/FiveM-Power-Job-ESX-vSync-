@@ -48,4 +48,4 @@ end)
 2.) Sabotage pos - 
 
 
-
+Credits to https://github.com/utkuali/pacificheist-ESX- for the bomb animation Networking <3
