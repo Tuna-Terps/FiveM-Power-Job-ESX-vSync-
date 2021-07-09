@@ -1,4 +1,4 @@
-# FiveM---Power-Job---ESX---vSync-
+Thanks for checking out my first FiveM resource ! I hope you enjoy <3
 
 No POWER no LIGHTS - An ESX job that must be maintained by the players ! 
 
