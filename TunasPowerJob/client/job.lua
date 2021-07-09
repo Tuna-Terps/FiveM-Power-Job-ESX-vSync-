@@ -22,7 +22,7 @@ vC = nil
 
 local onJob = false
 local npcJob = false
-
+local onHeist = nil
 -- ---------------------------------------------- loops --------------------------------------------
 
 Citizen.CreateThread(function()
@@ -225,7 +225,6 @@ function NpcJob()
         while true do
         Wait(5)
         local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xCoords.x,xCoords.y, xCoords.z, false)
-        --print (uDist .. " udist")
         if uDist < 20 then
             ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
             if uDist < 3 then
@@ -306,8 +305,9 @@ Citizen.CreateThread(function()
 end)
 
 function Sabotage()
-	print(xCoords)
-    while true do
+    print(xCoords)
+    onHeist = true
+    while onHeist do
     	Wait(5)
     	local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z,567.17, -1581.83, 28.19, false)
     	print (uDist .. "the fuckin udist")
@@ -317,7 +317,7 @@ function Sabotage()
         		ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to plant bomb!", true, true, 5000)
             	if IsControlJustPressed(0,38) then
             		SabotageAnim()
-			        return
+                    onHeist = false
         		end
         	end
 		end
@@ -333,11 +333,10 @@ function SabotageAnim()
         while not HasAnimDictLoaded("anim@heists@ornate_bank@thermal_charge") do
             Citizen.Wait(50)
         end
-	RequestAnimDict("mini@repair")
+	    RequestAnimDict("mini@repair")
         while not HasAnimDictLoaded("mini@repair") do
             Citizen.Wait(50)
         end
-
         local ped = PlayerPedId()
         SetEntityHeading(pIndex, 51.46)
         Citizen.Wait(100)
@@ -347,15 +346,15 @@ function SabotageAnim()
         NetworkAddEntityToSynchronisedScene(pIndex, bagscene, "anim@heists@ornate_bank@thermal_charge", "bag_thermal_charge", 4.0, -8.0, 1)
         NetworkStartSynchronisedScene(bagscene)
         exports['progressBars']:startUI(4500, 'Preparing to place bomb')
-	TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
-	FreezeEntityPosition(pIndex, true)
+	    TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
+	    FreezeEntityPosition(pIndex, true)
         Citizen.Wait(1500)
         local x, y, z = table.unpack(GetEntityCoords(pIndex))
         local bomb = CreateObject(GetHashKey("hei_prop_heist_thermite"), x, y, z + 0.2,  true,  true, true)
         SetEntityCollision(bomb, false, true)
         AttachEntityToEntity(bomb, pIndex, GetPedBoneIndex(pIndex, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-	Citizen.Wait(4000)
-	FreezeEntityPosition(pIndex, false)
+	    Citizen.Wait(4000)
+	    FreezeEntityPosition(pIndex, false)
         exports['progressBars']:startUI(12000, 'Charge has been placed !! - STAND BACK - !!')
         DetachEntity(bomb, 1, 1)
         FreezeEntityPosition(bomb, true)
@@ -372,15 +371,15 @@ function SabotageAnim()
         AddExplosion(566.09, -1580.91, 28.19, 7, 10 , true, false, true, false)
         Citizen.Wait(100)
         DeleteObject(bomb)
-        if not onJob then
+        if onHeist then
             Citizen.Wait(5000)
             ClearPedTasksImmediately(PlayerPedId())
             TriggerServerEvent("grid:sub", 1000)
-            onJob = false
+            onHeist = false
             return
         else
             ClearPedTasksImmediately(PlayerPedId()) 
-            print('youre already on the clock foh ...')
+            onHeist = false
             return
         end
         return
@@ -410,8 +409,7 @@ function ChangeClothes()
     end)
 
     TriggerEvent('skinchanger:getSkin', function(skin)
-        --print('lets get to work .... client:369')
-        -- if GetHashKey(GetEntityModel(PlayerPedId())) == Male then
+                        -- MALE
            if skin.sex == 0 then
             local clothesSkin = {
                 ['tshirt_1'] = 15,  ['tshirt_2'] = 0,
@@ -426,6 +424,7 @@ function ChangeClothes()
             }
             TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
         else
+                        -- FEMALE
             local clothesSkin = {
                 ['tshirt_1'] = 15,  ['tshirt_2'] = 0,
                 ['torso_1'] = 95,   ['torso_2'] = 0,
