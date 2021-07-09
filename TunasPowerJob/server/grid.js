@@ -12,10 +12,8 @@ console.log(`
 https://github.com/Tuna-Terps
 https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
 --------------------------------------------------------------------------------------------------------`);
-
 let ESX = null;
 let powerGrid = 1000;
-let blackout = false;
 Wait = (ms) => new Promise(r => setTimeout(r, ms))
 
 //emit("esx:getSharedObject", (obj) => ESX = obj);
@@ -36,7 +34,7 @@ onNet('grid:sub', (amount) => {
 // ---------------------------------//loop for electric grid//--------------------------------------------------// 
 
 setTick(async() => {
-    emitNet('esx:showNotification', -1, `💡🔋 ${powerGrid} 🔋💡`);
+    emitNet('esx:showNotification', -1, `⚡🔋 ${powerGrid} 🔋⚡`);
     await Wait(20000);
     powerGrid--
     let cW = exports.vSync.weatherCb()
@@ -54,7 +52,7 @@ setTick(async() => {
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)})  
     }
     else if (powerGrid <= 500 && powerGrid >= 510) {     
-        emitNet('esx:showNotification', -1, `💡🔌 The city is experiencing rolling blackouts !! 🔌💡`);
+        emitNet('esx:showNotification', -1, `⚡🔌 The city is experiencing rolling blackouts !! 🔌⚡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(30000)
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
@@ -64,13 +62,13 @@ setTick(async() => {
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)})  
     }
     else if (powerGrid <= 400 && powerGrid >= 100) {
-        emitNet('esx:showNotification', -1, `💡🔌 The Power Grid is failing !!🔌💡`);
+        emitNet('esx:showNotification', -1, `💡⚡ The Power Grid is failing !!⚡💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true) })  
         await Wait(30000)
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false) })  
     }
     else if (powerGrid <= 99) {
-        emitNet('esx:showNotification', -1, `💡🕯️ The Power Grid has ~r~collapsed ~w~!!🕯️💡`);
+        emitNet('esx:showNotification', -1, `⚡🕯️ The Power Grid has collapsed !!🕯️⚡`);
         setImmediate(() => { emitNet('vSync:updateWeather', -1, cW, true) })
     }
     await Wait(1000)
