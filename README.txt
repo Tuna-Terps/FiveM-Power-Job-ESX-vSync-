@@ -12,20 +12,11 @@ No POWER no LIGHTS - An ESX job that must be maintained by the players !
 
 2.) In server.cfg add ensure TunasPowerJob (VSYNC MUST START BEFORE POWERJOB; SO PLACE POWERJOB BELOW IT)
 
-3.) In your vSync mod we will make 2 additions, one in vs_server.lua & the fxmanifest.lua files (will work if youre using older __resource.lua)
+3.) In your vSync mod we wil replace 2 files from the contents of the INSTALL_ME folder
 
-3a.) add -- TunasPowerJob - Add this to vs_server.lua ------------------------------
-
-exports('weatherCb', function(cB)
-    cB = CurrentWeather
-    return cB
-end)
-
-------------------------------------------------------------------------
- => to vs_server.lua
-
-3b.) add server_export 'weatherCb'
-=> to fxmanifest.lua
+3a.) replace /vSync/vs_server.lua with /INSTALL_ME/vs_server.lua
+-
+3b.) replace /vSync/fxmanifest.luawith /INSTALL_ME/fxmanifest.lua
 
 4.) import importthis.sql to your database
 
