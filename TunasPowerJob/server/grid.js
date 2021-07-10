@@ -33,45 +33,58 @@ onNet('grid:sub', (amount) => {
 })
 // ---------------------------------//loop for electric grid//--------------------------------------------------// 
 
+
 setTick(async() => {
-    emitNet('esx:showNotification', -1, `⚡🔋 ${powerGrid} 🔋⚡`);
-    await Wait(20000);
+    emitNet('esx:showNotification', -1, `💡🔋 ${powerGrid} 🔋💡`);
+    await Wait(1000);
     powerGrid--
     let cW = exports.vSync.weatherCb()
     //console.log(`${cW} is the current weather ....`)
     //console.log(` Percentage: ${powerGrid} %`)
     await Wait(10)
     if (powerGrid >= 999){
+        blackout = false;
         emitNet('esx:showNotification', -1, `💡🔋 The Power Grid is at full capacity !! 🔋💡`);
-        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)})   
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
     }
     else if (powerGrid <= 700 && powerGrid >= 600 ){
         emitNet('esx:showNotification', -1, `💡🔌 The Power Grid is unstable, power surges are common !! 🔌💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(5000)
-        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)})  
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
+        blackout = false;
     }
     else if (powerGrid <= 500 && powerGrid >= 510) {     
-        emitNet('esx:showNotification', -1, `⚡🔌 The city is experiencing rolling blackouts !! 🔌⚡`);
+        emitNet('esx:showNotification', -1, `💡🔌 The city is experiencing rolling blackouts !! 🔌💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(30000)
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
         await Wait(15000)
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(20000)
-        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)})  
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)})
+        blackout = false;
     }
     else if (powerGrid <= 400 && powerGrid >= 100) {
-        emitNet('esx:showNotification', -1, `💡⚡ The Power Grid is failing !!⚡💡`);
+        emitNet('esx:showNotification', -1, `💡🔌 The Power Grid is failing !!🔌💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true) })  
         await Wait(30000)
-        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false) })  
+        setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false) })
+        blackout = false;
     }
     else if (powerGrid <= 99) {
-        emitNet('esx:showNotification', -1, `⚡🕯️ The Power Grid has collapsed !!🕯️⚡`);
+        blackout = true;
+        setImmediate(() => {emitNet('esx:showNotification', -1, `💡🕯️ The Power Grid has collapsed !!🕯️💡`);})
         setImmediate(() => { emitNet('vSync:updateWeather', -1, cW, true) })
     }
-    await Wait(1000)
+    //await Wait(1000)
+    emit('vSync:requestSync')
+    await Wait(20000)
+})
+
+exports('checkBl', (bC) => {
+    bC = blackout
+    return bC
 })
 
 // ------------------------------------------//end of electric grid//--------------------------------------------------
