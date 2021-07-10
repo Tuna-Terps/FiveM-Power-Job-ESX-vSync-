@@ -4,7 +4,7 @@ games { 'rdr3', 'gta5' }
 
 author 'Tuna Terps'
 description 'No POWER ? No lights !! An ESX job that requires players to maintain a power grid for the city !'
-version '1.0.1'
+version '1.0.2'
 
 client_script 'client/job.lua'
 
