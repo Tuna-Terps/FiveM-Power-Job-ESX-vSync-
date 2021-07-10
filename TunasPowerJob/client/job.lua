@@ -50,7 +50,6 @@ Citizen.CreateThread(function()
         local s = true
         local dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 537.77, -1651.43, 29.26, false)
         if jobMenu ~= nil then
-            dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 537.77, -1651.43, 29.26, false)
             while jobMenu ~= nil and dist > 1.5 do jobMenu = nil Citizen.Wait(1) end
             if jobMenu == nil then ESX.UI.Menu.CloseAll() end
         else
@@ -282,7 +281,6 @@ Citizen.CreateThread(function()
         local s2 = true
         local dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 567.17, -1581.83, 28.19, false)
         if sMenu ~= nil then
-            dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 567.17, -1581.83, 28.19, false)
             while sMenu ~= nil and dist > 1.5 do sMenu = nil Citizen.Wait(1) end
             if sMenu == nil then ESX.UI.Menu.CloseAll() end
         else
