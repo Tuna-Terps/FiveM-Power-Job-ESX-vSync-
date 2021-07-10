@@ -22,7 +22,7 @@ exports('weatherCb', function(cB)
 end)
 
 ------------------------------------------------------------------------
- => to sv_server.lua
+ => to vs_server.lua
 
 3b.) add server_export 'weatherCb'
 => to fxmanifest.lua
