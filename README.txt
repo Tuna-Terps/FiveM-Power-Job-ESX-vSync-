@@ -45,7 +45,7 @@ If done correctly; your Power Grid will be up and running !!
 -
 4.) Travel Grid Work - A short traveling job that allows players to contribute a larger amount towards the grid while receiving a larger payout
 -
-5.) The grid can also be SABOTAGED (Because why not ??) with an item called "explosives" (You will need to either add this to stores manually, or choose to spawn it etc)
+5.) The grid can also be SABOTAGED (Because why not ??) with an item called "explosive" (You will need to either add this to stores manually, or choose to spawn it etc)
 -
 6.) Manually add/subtract from the grid with a whitelisted command /power [add/sub] [amount]
 -
