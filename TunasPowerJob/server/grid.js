@@ -42,7 +42,7 @@ setTick(async() => {
     //console.log(`${cW} is the current weather ....`)
     //console.log(` Percentage: ${powerGrid} %`)
     await Wait(10)
-    if (powerGrid >= 999){
+    if (powerGrid >= 999 && powerGrid >= 701){
         blackout = false;
         emitNet('esx:showNotification', -1, `💡🔋 The Power Grid is at full capacity !! 🔋💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
