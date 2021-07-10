@@ -16,3 +16,5 @@ server_scripts {
 dependencies {
     "vSync"
 }
+
+server_export 'checkBl'
