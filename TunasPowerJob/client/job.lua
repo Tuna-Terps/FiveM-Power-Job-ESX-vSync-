@@ -308,7 +308,6 @@ function Sabotage()
     while onHeist do
     	Wait(5)
     	local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z,567.17, -1581.83, 28.19, false)
-    	print (uDist .. "the fuckin udist")
     	if uDist < 10 then
     	    ESX.ShowHelpNotification("Locate the nearby *electric panel and SABOTAGE the power grid !", true, true, 5000)
         	if uDist < 1.5 then
