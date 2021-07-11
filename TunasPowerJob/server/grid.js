@@ -54,7 +54,7 @@ setTick(async() => {
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
         blackout = false;
     }
-    else if (powerGrid <= 500 && powerGrid >= 510) {     
+    else if (powerGrid <= 500 && powerGrid >= 401) {     
         emitNet('esx:showNotification', -1, `💡🔌 The city is experiencing rolling blackouts !! 🔌💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(30000)
