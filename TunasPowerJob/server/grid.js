@@ -44,10 +44,10 @@ setTick(async() => {
     await Wait(10)
     if (powerGrid >= 999 && powerGrid >= 701){
         blackout = false;
-        emitNet('esx:showNotification', -1, `💡🔋 The Power Grid is at full capacity !! 🔋💡`);
+        emitNet('esx:showNotification', -1, `💡🔋 The Power Grid is at optimal capacity !! 🔋💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
     }
-    else if (powerGrid <= 700 && powerGrid >= 600 ){
+    else if (powerGrid <= 700 && powerGrid >= 501 ){
         emitNet('esx:showNotification', -1, `💡🔌 The Power Grid is unstable, power surges are common !! 🔌💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(5000)
