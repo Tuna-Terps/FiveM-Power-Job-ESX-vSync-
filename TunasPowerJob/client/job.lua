@@ -91,7 +91,7 @@ function OpenJobMenu()
         elements = {
         {label = 'Local Grid Work', value = 'option_grid'},
         {label = 'Travel Grid Work', value = 'option_npc'},
-        {label = 'Travel Grid Work XL', value = 'option_xl'},
+        --{label = 'Travel Grid Work XL', value = 'option_xl'},
     }
         }, function(data, menu)
         if data.current.value == 'option_grid' then
