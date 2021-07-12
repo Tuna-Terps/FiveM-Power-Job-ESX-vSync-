@@ -170,10 +170,10 @@ end
 function startJob()
     local sC1 = vector3(556.96, -1610.5, 28.03)
     local n1 = false
-    local mB0 = AddBlipForCoord(siteCoords)
-    SetBlipRoute(mB, true)
-    SetBlipRouteColour(mB, 46)
-    SetBlipColour(mB, 46)
+    local mB0 = AddBlipForCoord(sC1)
+    SetBlipRoute(mB0, true)
+    SetBlipRouteColour(mB0, 46)
+    SetBlipColour(mB0, 46)
     Citizen.CreateThread(function()
         local wait = 100
         while not nearby do
@@ -229,10 +229,10 @@ function startJobNpc()
         SetVehicleLivery(veh, 4)
         SetPedIntoVehicle(p, veh, -1)
         print(veh)
-        local mB = AddBlipForCoord(siteCoords)
-        SetBlipRoute(mB, true)
-        SetBlipRouteColour(mB, 46)
-        SetBlipColour(mB, 46)
+        local mBNpc = AddBlipForCoord(siteCoords)
+        SetBlipRoute(mBNpc, true)
+        SetBlipRouteColour(mBNpc, 46)
+        SetBlipColour(mBNpc, 46)
         Citizen.CreateThread(function()
             local wait = 100
             while not nearby do
@@ -244,8 +244,8 @@ function startJobNpc()
                     if tDist < 2 then
                         n2 = true
                         Citizen.Wait(1000)
-                        SetBlipRoute(mB, false)
-                        RemoveBlip(mB)
+                        SetBlipRoute(mBNpc, false)
+                        RemoveBlip(mBNpc)
                         NpcJob()
                         return
                     end
@@ -279,7 +279,7 @@ end
 function FinishJob()
     local siteCoords = vector3(571.46,-1653.56,26.85)
     local nearby = false
-    local mB = AddBlipForCoord(siteCoords)
+    mB = AddBlipForCoord(siteCoords)
     SetBlipRoute(mB, true)
     SetBlipRouteColour(mB, 46)
     SetBlipColour(mB, 46)
