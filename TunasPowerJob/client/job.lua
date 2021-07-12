@@ -17,13 +17,13 @@ player = nil
 coords = {}
 PlayerData = {}
 local mB = nil
-vC = nil
+vC = {}
 
-onJob = false
-npcJob = false
+local onJob = false
+local npcJob = false
 onHeist = nil
 -- tuna testing
-xlJob = false
+local xlJob = false
 --local isV = false
 
 
@@ -293,14 +293,15 @@ function FinishJob()
                 wait = 5
                 DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
                 if tDist < 8 then
-                    local v = GetVehiclePedIsIn(player)
+                    local p = PlayerPedId()
+                    local v = GetVehiclePedIsIn(p)
                     nearby = true
-			onJob = false
                 	Citizen.Wait(1000)
                 	SetBlipRoute(mB, false)
                 	RemoveBlip(mB)
                     ESX.Game.DeleteVehicle(v)
                     TriggerServerEvent('grid:pay')
+		    onJob = false
                     if isVan then
                         TriggerServerEvent('grid:pay')
                     else
