@@ -26,7 +26,6 @@ onHeist = nil
 xlJob = false
 --local isV = false
 
--- TO CONFIG CHANGE FOR 
 
 -- ---------------------------------------------- loops --------------------------------------------
 
@@ -103,6 +102,7 @@ function OpenJobMenu()
                 onJob = true
                 startJob()
             else
+		print('~r~error: ~w~already on the clock ....')
                 return
             end
         elseif data.current.value == 'option_npc' then
@@ -112,6 +112,7 @@ function OpenJobMenu()
                 onJob = true
                 startJobNpc()
             else
+		print('~r~error: ~w~already on the clock ....')
                 return
             end
         elseif data.current.value == 'option_xl' then
@@ -121,6 +122,7 @@ function OpenJobMenu()
                 onJob = true
                 startJobXl()
             else
+		print('~r~error: ~w~already on the clock ....')
                 return
             end
         end
