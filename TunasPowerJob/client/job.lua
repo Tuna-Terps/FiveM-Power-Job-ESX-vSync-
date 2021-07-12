@@ -19,11 +19,11 @@ PlayerData = {}
 local mB = nil
 vC = nil
 
-local onJob = false
-local npcJob = false
-local onHeist = nil
+onJob = false
+npcJob = false
+onHeist = nil
 -- tuna testing
-local xlJob = false
+xlJob = false
 --local isV = false
 
 -- TO CONFIG CHANGE FOR GRID ADDITIONS; SEARCH "grid:add" 1st is local work, 2nd is 
