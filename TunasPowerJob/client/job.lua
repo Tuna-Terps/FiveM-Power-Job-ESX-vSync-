@@ -277,32 +277,32 @@ function NpcJob()
 end
 
 function FinishJob()
-    local siteCoords = vector3(571.46,-1653.56,26.85)
+    local sCF = vector3(571.46,-1653.56,26.85)
     local nearby = false
-    mB = AddBlipForCoord(siteCoords)
-    SetBlipRoute(mB, true)
-    SetBlipRouteColour(mB, 46)
-    SetBlipColour(mB, 46)
+    local mBF = AddBlipForCoord(siteCoords)
+    SetBlipRoute(mBF, true)
+    SetBlipRouteColour(mBF, 46)
+    SetBlipColour(mBF, 46)
     Citizen.CreateThread(function()
         local wait = 100
         ESX.ShowHelpNotification("Return the vehicle to recieve an additional payment !", true, true, 5000)
         while not nearby do
             Citizen.Wait(wait)
-            local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, siteCoords, false)
+            local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, sCF, false)
             if tDist < 20 then
                 wait = 5
-                DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                DrawMarker(29, sCF, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
                 if tDist < 8 then
                     local p = PlayerPedId()
                     local v = GetVehiclePedIsIn(p)
                     nearby = true
                 	Citizen.Wait(1000)
-                	SetBlipRoute(mB, false)
-                	RemoveBlip(mB)
-                    ESX.Game.DeleteVehicle(v)
-                    TriggerServerEvent('grid:pay')
-		    onJob = false
-                    Citizen.Wait(1000)
+                	SetBlipRoute(mBF, false)
+                	RemoveBlip(mBF)
+                    	ESX.Game.DeleteVehicle(v)
+                    	TriggerServerEvent('grid:pay')
+		    	onJob = false
+                    	Citizen.Wait(1000)
                     return
                 end
            end   
@@ -321,7 +321,7 @@ function startJobXl()
         SetVehicleLivery(veh, 4)
         SetPedIntoVehicle(p, veh, -1)
         print(veh)
-        mB2 = AddBlipForCoord(siteCoordsXl)
+        local mB2 = AddBlipForCoord(siteCoordsXl)
         SetBlipRoute(mB2, true)
         SetBlipRouteColour(mB2, 46)
         SetBlipColour(mB2, 46)
