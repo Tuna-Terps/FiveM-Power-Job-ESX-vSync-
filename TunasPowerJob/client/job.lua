@@ -302,11 +302,6 @@ function FinishJob()
                     ESX.Game.DeleteVehicle(v)
                     TriggerServerEvent('grid:pay')
 		    onJob = false
-                    if isVan then
-                        TriggerServerEvent('grid:pay')
-                    else
-                        return
-                    end
                     Citizen.Wait(1000)
                     return
                 end
@@ -407,7 +402,6 @@ Citizen.CreateThread(function()
 end)
 
 function Sabotage()
-    print(xCoords)
     onHeist = true
     while onHeist do
     	Wait(5)
