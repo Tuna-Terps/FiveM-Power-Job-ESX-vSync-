@@ -293,8 +293,7 @@ function FinishJob()
                 wait = 5
                 DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
                 if tDist < 8 then
-                    local p = PlayerPedId()
-                    local v = GetVehiclePedIsIn(p)
+                    local v = GetVehiclePedIsIn(player)
                     nearby = true
 			onJob = false
                 	Citizen.Wait(1000)
