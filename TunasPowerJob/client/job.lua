@@ -6,10 +6,10 @@ ___________                ___________
   |____| |____/|___|  (____  /____| \___  >__|  |   __/____  >
                     \/     \/           \/      |__|       \/
 
-🐟❤️ PoWeR Job - created by Tuna Terps; If you enjoyed, go ahead and check out some of my other work ! 
+ðŸŸâ¤ï¸ PoWeR Job - created by Tuna Terps; If you enjoyed, go ahead and check out some of my other work ! 
 https://github.com/Tuna-Terps
 https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
-🐟 ❤️
+ðŸŸ â¤ï¸
 ]]--
 ---------------------------------------------- variables -------------------------------------------
 ESX = nil
@@ -19,11 +19,11 @@ PlayerData = {}
 local mB = nil
 vC = nil
 
-local onJob = false
-local npcJob = false
-local onHeist = nil
+onJob = false
+npcJob = false
+onHeist = nil
 -- tuna testing
-local xlJob = false
+xlJob = false
 --local isV = false
 
 -- TO CONFIG CHANGE FOR 
@@ -42,7 +42,7 @@ end)
 Citizen.CreateThread(function()
     local hQ = vector3(537.77, -1651.43, 29.26)
     while true do
-		player = PlayerPedId()
+	player = PlayerPedId()
         coords = GetEntityCoords(player)
         local hB = AddBlipForCoord(hQ)
         SetBlipSprite(hB,466)
@@ -103,7 +103,6 @@ function OpenJobMenu()
                 onJob = true
                 startJob()
             else
-                console.log('still on job ....')
                 return
             end
         elseif data.current.value == 'option_npc' then
@@ -113,7 +112,6 @@ function OpenJobMenu()
                 onJob = true
                 startJobNpc()
             else
-                console.log('still on job ....')
                 return
             end
         elseif data.current.value == 'option_xl' then
@@ -123,7 +121,6 @@ function OpenJobMenu()
                 onJob = true
                 startJobXl()
             else
-                console.log('still on job ....')
                 return
             end
         end
@@ -143,16 +140,14 @@ function TorchAnim()
             ClearPedTasksImmediately(PlayerPedId())
             TriggerServerEvent("grid:add", 25)
             TriggerServerEvent("grid:pay")
-            --onJob = false
+            onJob = false
             if npcJob then
-                onJob = false
                 TriggerServerEvent("grid:add", 50)
                 FinishJob()
                 npcJob = false
                 return
             end
             if xlJob then
-                onJob = false
                 TriggerServerEvent("grid:add", 200)
                 TriggerServerEvent("grid:pay")
                 FinishJob()
@@ -160,8 +155,10 @@ function TorchAnim()
                 return
             end
             return
-		else 
-			print('youre already on the clock foh ...')
+	else 
+		onJob = false
+		print('youre already on the clock foh ...')
+		return
         end
     end)
 end
