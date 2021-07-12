@@ -279,7 +279,7 @@ end
 function FinishJob()
     local sCF = vector3(571.46,-1653.56,26.85)
     local nearby = false
-    local mBF = AddBlipForCoord(siteCoords)
+    local mBF = AddBlipForCoord(sCF)
     SetBlipRoute(mBF, true)
     SetBlipRouteColour(mBF, 46)
     SetBlipColour(mBF, 46)
