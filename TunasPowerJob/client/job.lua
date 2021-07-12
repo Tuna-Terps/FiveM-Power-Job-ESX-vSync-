@@ -19,14 +19,14 @@ PlayerData = {}
 local mB = nil
 vC = nil
 
-onJob = false
-npcJob = false
-onHeist = nil
+local onJob = false
+local npcJob = false
+local onHeist = nil
 -- tuna testing
-xlJob = false
+local xlJob = false
 --local isV = false
 
--- TO CONFIG CHANGE FOR GRID ADDITIONS; SEARCH "grid:add" 1st is local work, 2nd is 
+-- TO CONFIG CHANGE FOR 
 
 -- ---------------------------------------------- loops --------------------------------------------
 
@@ -42,7 +42,7 @@ end)
 Citizen.CreateThread(function()
     local hQ = vector3(537.77, -1651.43, 29.26)
     while true do
-	player = PlayerPedId()
+		player = PlayerPedId()
         coords = GetEntityCoords(player)
         local hB = AddBlipForCoord(hQ)
         SetBlipSprite(hB,466)
@@ -103,6 +103,7 @@ function OpenJobMenu()
                 onJob = true
                 startJob()
             else
+                console.log('still on job ....')
                 return
             end
         elseif data.current.value == 'option_npc' then
@@ -112,6 +113,7 @@ function OpenJobMenu()
                 onJob = true
                 startJobNpc()
             else
+                console.log('still on job ....')
                 return
             end
         elseif data.current.value == 'option_xl' then
@@ -121,6 +123,7 @@ function OpenJobMenu()
                 onJob = true
                 startJobXl()
             else
+                console.log('still on job ....')
                 return
             end
         end
@@ -138,19 +141,18 @@ function TorchAnim()
         FreezeEntityPosition(pIndex, false)
         if onJob then
             ClearPedTasksImmediately(PlayerPedId())
-		-- LOCAL WORK
             TriggerServerEvent("grid:add", 25)
             TriggerServerEvent("grid:pay")
-            onJob = false
+            --onJob = false
             if npcJob then
-		-- TRAVEL WORK
+                onJob = false
                 TriggerServerEvent("grid:add", 50)
                 FinishJob()
                 npcJob = false
                 return
             end
             if xlJob then
-		-- TRAVEL WORK XL			
+                onJob = false
                 TriggerServerEvent("grid:add", 200)
                 TriggerServerEvent("grid:pay")
                 FinishJob()
