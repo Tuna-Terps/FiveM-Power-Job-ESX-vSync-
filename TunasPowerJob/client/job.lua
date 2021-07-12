@@ -111,7 +111,6 @@ function OpenJobMenu()
             else
                 print('already on the clock ..')
             end
-            end
         end
 	end)
 end
