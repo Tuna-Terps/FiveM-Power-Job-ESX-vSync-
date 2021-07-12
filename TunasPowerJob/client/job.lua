@@ -164,6 +164,39 @@ function TorchAnim()
         end
     end)
 end
+function FinishJob()
+    local sCF = vector3(571.46,-1653.56,26.85)
+    local nearby = false
+    local mBF = AddBlipForCoord(sCF)
+    SetBlipRoute(mBF, true)
+    SetBlipRouteColour(mBF, 46)
+    SetBlipColour(mBF, 46)
+    Citizen.CreateThread(function()
+        local wait = 100
+        ESX.ShowHelpNotification("Return the vehicle to recieve an additional payment !", true, true, 5000)
+        while not nearby do
+            Citizen.Wait(wait)
+            local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, sCF, false)
+            if tDist < 20 then
+                wait = 5
+                DrawMarker(29, sCF, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                if tDist < 8 then
+                    local p = PlayerPedId()
+                    local v = GetVehiclePedIsIn(p)
+                    nearby = true
+                	Citizen.Wait(1000)
+                	SetBlipRoute(mBF, false)
+                	RemoveBlip(mBF)
+                    	ESX.Game.DeleteVehicle(v)
+                    	TriggerServerEvent('grid:pay')
+		    	onJob = false
+                    	Citizen.Wait(1000)
+                    return
+                end
+           end   
+        end
+    end)
+end
 
 -- -----------------------------------------local grid work----------------------------------------------
 
@@ -276,39 +309,6 @@ function NpcJob()
     end  
 end
 
-function FinishJob()
-    local sCF = vector3(571.46,-1653.56,26.85)
-    local nearby = false
-    local mBF = AddBlipForCoord(sCF)
-    SetBlipRoute(mBF, true)
-    SetBlipRouteColour(mBF, 46)
-    SetBlipColour(mBF, 46)
-    Citizen.CreateThread(function()
-        local wait = 100
-        ESX.ShowHelpNotification("Return the vehicle to recieve an additional payment !", true, true, 5000)
-        while not nearby do
-            Citizen.Wait(wait)
-            local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, sCF, false)
-            if tDist < 20 then
-                wait = 5
-                DrawMarker(29, sCF, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
-                if tDist < 8 then
-                    local p = PlayerPedId()
-                    local v = GetVehiclePedIsIn(p)
-                    nearby = true
-                	Citizen.Wait(1000)
-                	SetBlipRoute(mBF, false)
-                	RemoveBlip(mBF)
-                    	ESX.Game.DeleteVehicle(v)
-                    	TriggerServerEvent('grid:pay')
-		    	onJob = false
-                    	Citizen.Wait(1000)
-                    return
-                end
-           end   
-        end
-    end)
-end
 -- ----------------------------------------XL Work -----------------------------------------------
 function startJobXl()
     local p = PlayerPedId()
