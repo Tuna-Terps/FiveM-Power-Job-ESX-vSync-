@@ -150,6 +150,7 @@ function TorchAnim()
                 npcJob = false
                 return
             end
+		--[[
             if xlJob then
                 TriggerServerEvent("grid:add", 200)
                 TriggerServerEvent("grid:pay")
@@ -157,6 +158,7 @@ function TorchAnim()
                 xlJob = false
                 return
             end
+		]]--
             return
 	else 
 		onJob = false
