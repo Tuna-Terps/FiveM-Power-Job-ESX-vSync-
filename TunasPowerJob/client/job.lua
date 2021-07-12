@@ -11,7 +11,6 @@ https://github.com/Tuna-Terps
 https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
 🐟 ❤️
 ]]--
-
 ---------------------------------------------- variables -------------------------------------------
 ESX = nil
 player = nil
@@ -23,21 +22,35 @@ vC = nil
 local onJob = false
 local npcJob = false
 local onHeist = nil
+-- tuna testing
+local xlJob = false
+--local isV = false
+
+-- TO CONFIG CHANGE FOR GRID ADDITIONS; SEARCH "grid:add" 1st is local work, 2nd is 
+
 -- ---------------------------------------------- loops --------------------------------------------
 
 Citizen.CreateThread(function()
 	while ESX == nil do
-	TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
-	Citizen.Wait(0)
+		TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
+		Citizen.Wait(0)
     end
 end)
 
 
--- track player coords
+-- track player coords, add blip
 Citizen.CreateThread(function()
+    local hQ = vector3(537.77, -1651.43, 29.26)
     while true do
-	player = PlayerPedId()
-	coords = GetEntityCoords(player)
+		player = PlayerPedId()
+        coords = GetEntityCoords(player)
+        local hB = AddBlipForCoord(hQ)
+        SetBlipSprite(hB,466)
+        SetBlipColour(hB,46)
+        SetBlipScale(hB,1.0)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString("LS D.W.P")
+        EndTextCommandSetBlipName(hB)
         Citizen.Wait(500)
     end
 end)
@@ -80,6 +93,7 @@ function OpenJobMenu()
         elements = {
         {label = 'Local Grid Work', value = 'option_grid'},
         {label = 'Travel Grid Work', value = 'option_npc'},
+        {label = 'Travel Grid Work XL', value = 'option_xl'},
     }
         }, function(data, menu)
         if data.current.value == 'option_grid' then
@@ -88,6 +102,8 @@ function OpenJobMenu()
             if onJob == false then
                 onJob = true
                 startJob()
+            else
+                return
             end
         elseif data.current.value == 'option_npc' then
             menu.close()
@@ -95,6 +111,17 @@ function OpenJobMenu()
             if onJob == false then
                 onJob = true
                 startJobNpc()
+            else
+                return
+            end
+        elseif data.current.value == 'option_xl' then
+            menu.close()
+            ChangeClothes()
+            if onJob == false then
+                onJob = true
+                startJobXl()
+            else
+                return
             end
         end
 	end)
@@ -111,15 +138,24 @@ function TorchAnim()
         FreezeEntityPosition(pIndex, false)
         if onJob then
             ClearPedTasksImmediately(PlayerPedId())
-            TriggerServerEvent("grid:add", 5)
+		-- LOCAL WORK
+            TriggerServerEvent("grid:add", 25)
             TriggerServerEvent("grid:pay")
-            TriggerEvent('esx:showNotification', player,'Job Complete; Power Grid level +10')
             onJob = false
             if npcJob then
-                print('this is a npc job')
-                TriggerServerEvent("grid:add", 10)
+		-- TRAVEL WORK
+                TriggerServerEvent("grid:add", 50)
                 FinishJob()
                 npcJob = false
+                return
+            end
+            if xlJob then
+		-- TRAVEL WORK XL			
+                TriggerServerEvent("grid:add", 200)
+                TriggerServerEvent("grid:pay")
+                FinishJob()
+                xlJob = false
+                return
             end
             return
 		else 
@@ -160,11 +196,13 @@ end
 
 function GridJob()
         local prop = GetClosestObjectOfType(537.77, -1651.43, 28.03, 100.0, GetHashKey("prop_sub_trans_01a"), false)
-        local xCoords = GetEntityCoords(prop)
+        local xC = GetEntityCoords(prop)
+        local xV = vector3(xC)+vector3(0,0,5)
         while true do
         Wait(5)
-        local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xCoords.x,xCoords.y, xCoords.z, false)
+        local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xC.x,xC.y, xC.z, false)
         if uDist < 20 then
+            DrawMarker(29, xV, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
             ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
             if uDist < 3 then
                 ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to repair subframe", true, true, 5000)
@@ -219,10 +257,10 @@ end
 
 function NpcJob()
         local prop = GetClosestObjectOfType(741.31, -1984.09, 30.05, 50.0, GetHashKey("prop_sub_trans_04a"), false)
-        local xCoords = GetEntityCoords(prop)
+        local xC2 = GetEntityCoords(prop)
         while true do
         Wait(5)
-        local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xCoords.x,xCoords.y, xCoords.z, false)
+        local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xC2.x,xC2.y, xC2.z, false)
         if uDist < 20 then
             ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
             if uDist < 3 then
@@ -262,12 +300,76 @@ function FinishJob()
                 	RemoveBlip(mB)
                     ESX.Game.DeleteVehicle(v)
                     TriggerServerEvent('grid:pay')
+                    if isVan then
+                        TriggerServerEvent('grid:pay')
+                    else
+                        return
+                    end
                     Citizen.Wait(1000)
                     return
                 end
            end   
         end
     end)
+end
+-- ----------------------------------------XL Work -----------------------------------------------
+function startJobXl()
+    local p = PlayerPedId()
+    local vC = vector3(571.46,-1653.56,26.85)
+    local h = 105.65
+    local siteCoords = vector3(742.5, 129.95, 80.05)
+    local n2 = false
+    ESX.Game.SpawnVehicle("burrito", vC, h , function(veh)
+	Citizen.Wait(500)
+        SetVehicleLivery(veh, 4)
+        SetPedIntoVehicle(p, veh, -1)
+        print(veh)
+        mB = AddBlipForCoord(siteCoords)
+        SetBlipRoute(mB, true)
+        SetBlipRouteColour(mB, 46)
+        SetBlipColour(mB, 46)
+        Citizen.CreateThread(function()
+            local wait = 100
+            while not nearby do
+                Citizen.Wait(wait)
+                local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, siteCoords, false)
+                if tDist < 20 then
+                    wait = 5
+                    DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                    if tDist < 2 then
+                        n2 = true
+                        Citizen.Wait(1000)
+                        SetBlipRoute(mB, false)
+                        RemoveBlip(mB)
+                        XlJob()
+                        return
+                    end
+                end   
+            end
+        end)
+    end)
+end
+
+function XlJob()
+    local prop = GetClosestObjectOfType(742.5, 129.95, 80.05, 100.0, GetHashKey("prop_sub_trans_01a"), false)
+    local xC3 = GetEntityCoords(prop)
+    local xV2 = vector3(xC3)+vector3(0,0,5)
+    while true do
+        Wait(5)
+        local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xC3.x,xC3.y, xC3.z, false)
+        if uDist < 25 then
+            ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
+            DrawMarker(29, xV2, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+            if uDist < 3 then
+                ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to repair subframe", true, true, 5000)
+                if IsControlJustPressed(0,38) then
+                    TorchAnim()
+                    xlJob = true
+                    return
+                end
+            end
+        end
+    end  
 end
 
 -- ----------------------------------------SABOTAGE -----------------------------------------------
@@ -290,7 +392,7 @@ Citizen.CreateThread(function()
                 s2 = false
                 if dist < 5 then
                     if dist < 1.5 then
-                        DrawText3Ds(567.17, -1581.83, 28.19, "~r~[~g~E~r~]".." ~w~Begin Sabotage")
+                        DrawText3Ds(567.17, -1581.83, 28.19, "~r~[~g~E~r~]".." ~w~Begin ~r~Sabotage")
                         if IsControlJustPressed(0, 38) then
                             	TriggerServerEvent('grid:verify')
                         end                          
@@ -308,6 +410,7 @@ function Sabotage()
     while onHeist do
     	Wait(5)
     	local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z,567.17, -1581.83, 28.19, false)
+    	--print (uDist .. "the fuckin udist")
     	if uDist < 10 then
     	    ESX.ShowHelpNotification("Locate the nearby *electric panel and SABOTAGE the power grid !", true, true, 5000)
         	if uDist < 1.5 then
@@ -343,15 +446,15 @@ function SabotageAnim()
         NetworkAddEntityToSynchronisedScene(pIndex, bagscene, "anim@heists@ornate_bank@thermal_charge", "bag_thermal_charge", 4.0, -8.0, 1)
         NetworkStartSynchronisedScene(bagscene)
         exports['progressBars']:startUI(4500, 'Preparing to place bomb')
-	TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
-	FreezeEntityPosition(pIndex, true)
+	    TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
+	    FreezeEntityPosition(pIndex, true)
         Citizen.Wait(1500)
         local x, y, z = table.unpack(GetEntityCoords(pIndex))
         local bomb = CreateObject(GetHashKey("hei_prop_heist_thermite"), x, y, z + 0.2,  true,  true, true)
         SetEntityCollision(bomb, false, true)
         AttachEntityToEntity(bomb, pIndex, GetPedBoneIndex(pIndex, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-	Citizen.Wait(4000)
-	FreezeEntityPosition(pIndex, false)
+	    Citizen.Wait(4000)
+	    FreezeEntityPosition(pIndex, false)
         exports['progressBars']:startUI(12000, 'Charge has been placed !! - STAND BACK - !!')
         DetachEntity(bomb, 1, 1)
         FreezeEntityPosition(bomb, true)
@@ -376,8 +479,8 @@ function SabotageAnim()
             return
         else
             ClearPedTasksImmediately(PlayerPedId())
-	    TriggerServerEvent("grid:sub", 1000) 
-            onHeist = false
+	        --TriggerServerEvent("grid:sub", 1000) 
+            --onHeist = false
             return
         end
         return
