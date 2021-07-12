@@ -168,9 +168,9 @@ end
 -- -----------------------------------------local grid work----------------------------------------------
 
 function startJob()
-    local siteCoords = vector3(556.96, -1610.5, 28.03)
+    local sC1 = vector3(556.96, -1610.5, 28.03)
     local n1 = false
-    mB = AddBlipForCoord(siteCoords)
+    local mB0 = AddBlipForCoord(siteCoords)
     SetBlipRoute(mB, true)
     SetBlipRouteColour(mB, 46)
     SetBlipColour(mB, 46)
@@ -181,12 +181,12 @@ function startJob()
             local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 556.96, -1610.5, 28.03, false)
             	if tDist < 20 then
                     wait = 5
-                    DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                    DrawMarker(29, sC1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
                     if tDist < 2 then
                         n1 = true
                     	Citizen.Wait(1000)
-                    	SetBlipRoute(mB, false)
-                    	RemoveBlip(mB)
+                    	SetBlipRoute(mB0, false)
+                    	RemoveBlip(mB0)
                         GridJob()
                         return
                    end
@@ -229,7 +229,7 @@ function startJobNpc()
         SetVehicleLivery(veh, 4)
         SetPedIntoVehicle(p, veh, -1)
         print(veh)
-        mB = AddBlipForCoord(siteCoords)
+        local mB = AddBlipForCoord(siteCoords)
         SetBlipRoute(mB, true)
         SetBlipRouteColour(mB, 46)
         SetBlipColour(mB, 46)
@@ -279,7 +279,7 @@ end
 function FinishJob()
     local siteCoords = vector3(571.46,-1653.56,26.85)
     local nearby = false
-    mB = AddBlipForCoord(siteCoords)
+    local mB = AddBlipForCoord(siteCoords)
     SetBlipRoute(mB, true)
     SetBlipRouteColour(mB, 46)
     SetBlipColour(mB, 46)
