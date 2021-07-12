@@ -296,6 +296,7 @@ function FinishJob()
                     local p = PlayerPedId()
                     local v = GetVehiclePedIsIn(p)
                     nearby = true
+			onJob = false
                 	Citizen.Wait(1000)
                 	SetBlipRoute(mB, false)
                 	RemoveBlip(mB)
