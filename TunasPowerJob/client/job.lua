@@ -319,30 +319,30 @@ function startJobXl()
     local p = PlayerPedId()
     local vC = vector3(571.46,-1653.56,26.85)
     local h = 105.65
-    local siteCoords = vector3(742.5, 129.95, 80.05)
+    local siteCoordsXl = vector3(742.5, 129.95, 80.05)
     local n2 = false
     ESX.Game.SpawnVehicle("burrito", vC, h , function(veh)
 	Citizen.Wait(500)
         SetVehicleLivery(veh, 4)
         SetPedIntoVehicle(p, veh, -1)
         print(veh)
-        mB = AddBlipForCoord(siteCoords)
-        SetBlipRoute(mB, true)
-        SetBlipRouteColour(mB, 46)
-        SetBlipColour(mB, 46)
+        mB2 = AddBlipForCoord(siteCoordsXl)
+        SetBlipRoute(mB2, true)
+        SetBlipRouteColour(mB2, 46)
+        SetBlipColour(mB2, 46)
         Citizen.CreateThread(function()
             local wait = 100
             while not nearby do
                 Citizen.Wait(wait)
-                local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, siteCoords, false)
+                local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, siteCoordsXl, false)
                 if tDist < 20 then
                     wait = 5
-                    DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                    DrawMarker(29, siteCoordsXl, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
                     if tDist < 2 then
                         n2 = true
                         Citizen.Wait(1000)
-                        SetBlipRoute(mB, false)
-                        RemoveBlip(mB)
+                        SetBlipRoute(mB2, false)
+                        RemoveBlip(mB2)
                         XlJob()
                         return
                     end
@@ -422,7 +422,7 @@ function Sabotage()
                     	onHeist = false
         		end
         	end
-		end
+	  end
      end    
 end
 
