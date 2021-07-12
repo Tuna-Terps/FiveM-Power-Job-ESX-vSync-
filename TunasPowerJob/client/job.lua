@@ -114,6 +114,7 @@ function OpenJobMenu()
 		print('~r~error: ~w~already on the clock ....')
                 return
             end
+	--[[
         elseif data.current.value == 'option_xl' then
             menu.close()
             ChangeClothes()
@@ -124,6 +125,7 @@ function OpenJobMenu()
 		print('~r~error: ~w~already on the clock ....')
                 return
             end
+	]]--
         end
 	end)
 end
@@ -312,6 +314,8 @@ function FinishJob1()
 end
 
 -- ----------------------------------------XL Work -----------------------------------------------
+
+--[[
 function startJobXl()
     local p = PlayerPedId()
     local vC = vector3(571.46,-1653.56,26.85)
@@ -405,7 +409,7 @@ function FinishJob2()
         end
     end)
 end
-
+]]--
 -- ----------------------------------------SABOTAGE -----------------------------------------------
 sMenu = nil
 RegisterNetEvent('grid:sabotage')
