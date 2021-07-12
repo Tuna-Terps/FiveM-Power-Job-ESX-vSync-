@@ -373,7 +373,7 @@ function FinishJob2()
     local nearby = false
     local mBF1 = AddBlipForCoord(sCF)
     SetBlipRoute(mBF1, true)
-    SetBlipRouteColour(mBF, 46)
+    SetBlipRouteColour(mBF1, 46)
     SetBlipColour(mBF1, 46)
     Citizen.CreateThread(function()
         local wait = 100
