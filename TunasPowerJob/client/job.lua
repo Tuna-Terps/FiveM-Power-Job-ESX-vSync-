@@ -36,10 +36,16 @@ end)
 -- track player coords
 -- track player coords, add blip
 Citizen.CreateThread(function()
+    while true do
+	player = PlayerPedId()
+        coords = GetEntityCoords(player)
+        Citizen.Wait(500)
+    end
+end)
+-- track player coords, add blip
+Citizen.CreateThread(function()
     local hQ = vector3(537.77, -1651.43, 29.26)
     while true do
-		player = PlayerPedId()
-        coords = GetEntityCoords(player)
         local hB = AddBlipForCoord(hQ)
         SetBlipSprite(hB,466)
         SetBlipColour(hB,46)
@@ -50,7 +56,6 @@ Citizen.CreateThread(function()
         Citizen.Wait(500)
     end
 end)
-
 
 jobMenu = nil
 -- ------------------------------------- job menu thread ----------------------------------------
