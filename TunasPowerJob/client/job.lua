@@ -55,12 +55,12 @@ end)
 jobMenu = nil
 -- ------------------------------------- job menu thread ----------------------------------------
 Citizen.CreateThread(function()
+    local objectCoords = vector3(537.77, -1651.43, 29.26)
     while true do
         Citizen.Wait(5)
         local s = true
-        local dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 537.77, -1651.43, 29.26, false)
+        local dist = #(coords - objectCoords)
         if jobMenu ~= nil then
-            dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 537.77, -1651.43, 29.26, false)
             while jobMenu ~= nil and dist > 1.5 do jobMenu = nil Citizen.Wait(1) end
             if jobMenu == nil then ESX.UI.Menu.CloseAll() end
         else
@@ -68,7 +68,7 @@ Citizen.CreateThread(function()
                 s = false
                 if dist < 13 then
                     if dist < 1.5 then
-                        DrawText3Ds(537.77, -1651.43, 29.26, "~r~[~g~E~r~]".." ~w~Open Job Menu")
+                        DrawText3Ds(objectCoords.x, objectCoords.y, objectCoords.z, "~r~[~g~E~r~]".." ~w~Open Job Menu")
                         if IsControlJustPressed(0, 38) then
                             OpenJobMenu()
                         end                          
@@ -156,24 +156,39 @@ function startJob()
         local wait = 100
         while not nearby do
             Citizen.Wait(wait)
-            local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 556.96, -1610.5, 28.03, false)
-            	if tDist < 20 then
-                    wait = 5
-                    DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
-                    if tDist < 2 then
-                        n1 = true
-                    	Citizen.Wait(1000)
-                    	SetBlipRoute(mB, false)
-                    	RemoveBlip(mB)
-                        GridJob()
-                        return
-                   end
+            local tDist = #(coords - siteCoords)
+        	if tDist < 20 then
+                wait = 5
+                DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                if tDist < 2 then
+                    n1 = true
+                	Citizen.Wait(1000)
+                	SetBlipRoute(mB, false)
+                	RemoveBlip(mB)
+                    GridJob()
+                    return
+               end
            	end   
         end
     end)
 end
 
 function GridJob()
+
+        local prop = GetClosestObjectOfType(537.77, -1651.43, 28.03, 100.0, GetHashKey("prop_sub_trans_01a"), false)
+        local xCoords = GetEntityCoords(prop)
+        while true do
+        Wait(5)
+        local uDist = #(coords - xCoords)
+        if uDist < 20 then
+            ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
+            if uDist < 3 then
+                ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to repair subframe", true, true, 5000)
+                if IsControlJustPressed(0,38) then
+                    TorchAnim()
+                    return
+                end
+
     local prop = GetClosestObjectOfType(537.77, -1651.43, 28.03, 100.0, GetHashKey("prop_sub_trans_01a"), false)
     local xC = GetEntityCoords(prop)
     local xV = vector3(xC)+vector3(0,0,5)
@@ -216,7 +231,7 @@ function startJobNpc()
             local wait = 100
             while not nearby do
                 Citizen.Wait(wait)
-                local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, siteCoords, false)
+                local tDist = #(coords - siteCoords)
                 if tDist < 20 then
                     wait = 5
                     DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
@@ -240,7 +255,7 @@ function NpcJob()
         local xCoords = GetEntityCoords(prop)
         while true do
         Wait(5)
-        local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xCoords.x,xCoords.y, xCoords.z, false)
+        local uDist = #(coords - xCoords)
         if uDist < 20 then
             ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
             if uDist < 3 then
@@ -267,7 +282,7 @@ function FinishJob()
         ESX.ShowHelpNotification("Return the vehicle to recieve an additional payment !", true, true, 5000)
         while not nearby do
             Citizen.Wait(wait)
-            local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, siteCoords, false)
+            local tDist = #(coords - siteCoords)
             if tDist < 20 then
                 wait = 5
                 DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
@@ -295,12 +310,12 @@ AddEventHandler('grid:sabotage', function()
 	  Sabotage()
 end)
 Citizen.CreateThread(function()
+    local objectCoords = vector3(567.17, -1581.83, 28.19)
     while true do
         Citizen.Wait(5)
         local s2 = true
-        local dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 567.17, -1581.83, 28.19, false)
+        local dist = #(coords - objectCoords)
         if sMenu ~= nil then
-            dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 567.17, -1581.83, 28.19, false)
             while sMenu ~= nil and dist > 1.5 do sMenu = nil Citizen.Wait(1) end
             if sMenu == nil then ESX.UI.Menu.CloseAll() end
         else
@@ -308,7 +323,7 @@ Citizen.CreateThread(function()
                 s2 = false
                 if dist < 5 then
                     if dist < 1.5 then
-                        DrawText3Ds(567.17, -1581.83, 28.19, "~r~[~g~E~r~]".." ~w~Begin Sabotage")
+                        DrawText3Ds(objectCoords.x, objectCoords.y, objectCoords.z, "~r~[~g~E~r~]".." ~w~Begin Sabotage")
                         if IsControlJustPressed(0, 38) then
                             	TriggerServerEvent('grid:verify')
                         end                          
@@ -325,15 +340,16 @@ function Sabotage()
     onHeist = true
     while onHeist do
     	Wait(5)
-    	local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z,567.17, -1581.83, 28.19, false)
-    	print (uDist .. "the fuckin udist")
+
+      local uDist = #(coords - vector3(567.17, -1581.83, 28.19))
+
     	if uDist < 10 then
     	    ESX.ShowHelpNotification("Locate the nearby *electric panel and SABOTAGE the power grid !", true, true, 5000)
         	if uDist < 1.5 then
         		ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to plant bomb!", true, true, 5000)
             	if IsControlJustPressed(0,38) then
             		SabotageAnim()
-                    	onHeist = false
+                    onHeist = false
         		end
         	end
 		end
