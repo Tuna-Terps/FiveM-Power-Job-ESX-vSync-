@@ -91,7 +91,7 @@ function OpenJobMenu()
         elements = {
         {label = 'Local Grid Work', value = 'option_grid'},
         {label = 'Travel Grid Work', value = 'option_npc'},
-        --{label = 'Travel Grid Work XL', value = 'option_xl'},
+        {label = 'Travel Grid Work XL', value = 'option_xl'},
     }
         }, function(data, menu)
         if data.current.value == 'option_grid' then
@@ -150,7 +150,6 @@ function TorchAnim()
                 npcJob = false
                 return
             end
-		--[[
             if xlJob then
                 TriggerServerEvent("grid:add", 200)
                 TriggerServerEvent("grid:pay")
@@ -158,7 +157,6 @@ function TorchAnim()
                 xlJob = false
                 return
             end
-		]]--
             return
 	else 
 		onJob = false
@@ -317,7 +315,6 @@ end
 
 -- ----------------------------------------XL Work -----------------------------------------------
 
---[[
 function startJobXl()
     local p = PlayerPedId()
     local vC = vector3(571.46,-1653.56,26.85)
@@ -411,7 +408,7 @@ function FinishJob2()
         end
     end)
 end
-]]--
+
 -- ----------------------------------------SABOTAGE -----------------------------------------------
 sMenu = nil
 RegisterNetEvent('grid:sabotage')
