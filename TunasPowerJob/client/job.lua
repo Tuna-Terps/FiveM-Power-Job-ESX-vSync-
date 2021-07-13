@@ -43,6 +43,7 @@ Citizen.CreateThread(function()
     end
 end)
 
+--[[
 Citizen.CreateThread(function()
 	local hQ = vector3(537.77, -1651.43, 29.26)
 	while true do
@@ -56,7 +57,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(500)
 	end
 end)
-
+]]--
 jobMenu = nil
 -- ------------------------------------- job menu thread ----------------------------------------
 Citizen.CreateThread(function()
