@@ -159,7 +159,7 @@ function startJob()
     SetBlipColour(mB, 46)
     Citizen.CreateThread(function()
         local wait = 100
-        while not nearby do
+        while not n1 do
             Citizen.Wait(wait)
             local tDist = #(coords - siteCoords)
         	if tDist < 20 then
@@ -179,7 +179,7 @@ function startJob()
 end
 
 function GridJob()
-
+--[[
         local prop = GetClosestObjectOfType(537.77, -1651.43, 28.03, 100.0, GetHashKey("prop_sub_trans_01a"), false)
         local xCoords = GetEntityCoords(prop)
         while true do
@@ -193,7 +193,7 @@ function GridJob()
                     TorchAnim()
                     return
                 end
-
+]]--
     local prop = GetClosestObjectOfType(537.77, -1651.43, 28.03, 100.0, GetHashKey("prop_sub_trans_01a"), false)
     local xC = GetEntityCoords(prop)
     local xV = vector3(xC)+vector3(0,0,5)
