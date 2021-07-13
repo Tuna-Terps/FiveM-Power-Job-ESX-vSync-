@@ -27,20 +27,30 @@ local onHeist = nil
 
 Citizen.CreateThread(function()
 	while ESX == nil do
-	TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
-	Citizen.Wait(0)
+		TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
+		Citizen.Wait(0)
     end
 end)
 
 
 -- track player coords
+-- track player coords, add blip
 Citizen.CreateThread(function()
+    local hQ = vector3(537.77, -1651.43, 29.26)
     while true do
-	player = PlayerPedId()
-	coords = GetEntityCoords(player)
+		player = PlayerPedId()
+        coords = GetEntityCoords(player)
+        local hB = AddBlipForCoord(hQ)
+        SetBlipSprite(hB,466)
+        SetBlipColour(hB,46)
+        SetBlipScale(hB,1.0)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString("LS D.W.P")
+        EndTextCommandSetBlipName(hB)
         Citizen.Wait(500)
     end
 end)
+
 
 jobMenu = nil
 -- ------------------------------------- job menu thread ----------------------------------------
@@ -88,6 +98,8 @@ function OpenJobMenu()
             if onJob == false then
                 onJob = true
                 startJob()
+            else
+                print('already on the clock ..')
             end
         elseif data.current.value == 'option_npc' then
             menu.close()
@@ -95,6 +107,9 @@ function OpenJobMenu()
             if onJob == false then
                 onJob = true
                 startJobNpc()
+            
+            else
+                print('already on the clock ..')
             end
         end
 	end)
@@ -159,6 +174,7 @@ function startJob()
 end
 
 function GridJob()
+
         local prop = GetClosestObjectOfType(537.77, -1651.43, 28.03, 100.0, GetHashKey("prop_sub_trans_01a"), false)
         local xCoords = GetEntityCoords(prop)
         while true do
@@ -172,10 +188,27 @@ function GridJob()
                     TorchAnim()
                     return
                 end
+
+    local prop = GetClosestObjectOfType(537.77, -1651.43, 28.03, 100.0, GetHashKey("prop_sub_trans_01a"), false)
+    local xC = GetEntityCoords(prop)
+    local xV = vector3(xC)+vector3(0,0,5)
+    while true do
+    Wait(5)
+    local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xC.x,xC.y, xC.z, false)
+    if uDist < 20 then
+        DrawMarker(29, xV, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+        ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
+        if uDist < 3 then
+            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to repair subframe", true, true, 5000)
+            if IsControlJustPressed(0,38) then
+                TorchAnim()
+                return
             end
         end
-    end  
+    end
+end  
 end
+
 
 -- ------------------------------------travel grid work ----------------------------------
 
@@ -307,7 +340,9 @@ function Sabotage()
     onHeist = true
     while onHeist do
     	Wait(5)
+
       local uDist = #(coords - vector3(567.17, -1581.83, 28.19))
+
     	if uDist < 10 then
     	    ESX.ShowHelpNotification("Locate the nearby *electric panel and SABOTAGE the power grid !", true, true, 5000)
         	if uDist < 1.5 then
@@ -343,15 +378,15 @@ function SabotageAnim()
         NetworkAddEntityToSynchronisedScene(pIndex, bagscene, "anim@heists@ornate_bank@thermal_charge", "bag_thermal_charge", 4.0, -8.0, 1)
         NetworkStartSynchronisedScene(bagscene)
         exports['progressBars']:startUI(4500, 'Preparing to place bomb')
-	TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
-	FreezeEntityPosition(pIndex, true)
+	    TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
+	    FreezeEntityPosition(pIndex, true)
         Citizen.Wait(1500)
         local x, y, z = table.unpack(GetEntityCoords(pIndex))
         local bomb = CreateObject(GetHashKey("hei_prop_heist_thermite"), x, y, z + 0.2,  true,  true, true)
         SetEntityCollision(bomb, false, true)
         AttachEntityToEntity(bomb, pIndex, GetPedBoneIndex(pIndex, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-	Citizen.Wait(4000)
-	FreezeEntityPosition(pIndex, false)
+	    Citizen.Wait(4000)
+	    FreezeEntityPosition(pIndex, false)
         exports['progressBars']:startUI(12000, 'Charge has been placed !! - STAND BACK - !!')
         DetachEntity(bomb, 1, 1)
         FreezeEntityPosition(bomb, true)
