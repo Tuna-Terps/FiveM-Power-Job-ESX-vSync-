@@ -7,7 +7,7 @@ console.log(`
 ^2#+#        #+#    #+#  #+#+# #+#+#  #+#        #+#    #+#       #+# #+#     #+#    #+# #+#    #+#                             
 ^2###         ########    ###   ###   ########## ###    ###        #####       ########  ########\n
 ^3--------------------------------------------------------------------------------------------------------
-^5><> Created by ^2Tuna Terps ^5=> If you enjoy the script, go ahead and check out some of my other work <3 !
+^5><> Created with ^1<3 ^5by ^2Tuna Terps ^5=> If you enjoy the script, go ahead and check out some of my other work <3 !
 ^3-------------------------------------------------------------------------------------------------------- 
 ^5https://github.com/Tuna-Terps
 ^5https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
