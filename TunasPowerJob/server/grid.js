@@ -72,7 +72,7 @@ setTick(async() => {
     }
     else if (powerGrid <= 99) {
         blackout = true;
-        setImmediate(() => {emitNet('esx:showNotification', -1, `💡🕯️ The Power Grid has collapsed !!🕯️💡`);})
+        emitNet('esx:showNotification', -1, `💡🕯️ The Power Grid has collapsed !!🕯️💡`);
         setImmediate(() => { emitNet('vSync:updateWeather', -1, cW, true) })
     }
     //await Wait(1000)
