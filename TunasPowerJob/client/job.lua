@@ -12,6 +12,8 @@ https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
 ?? ??
 ]]--
 
+enableBlip = true -- toggle whether youd like to use this blip; or your own :)
+
 ---------------------------------------------- variables -------------------------------------------
 ESX = nil
 player = nil
@@ -43,21 +45,20 @@ Citizen.CreateThread(function()
     end
 end)
 
---[[
-Citizen.CreateThread(function()
-	local hQ = vector3(537.77, -1651.43, 29.26)
-	while true do
-	local hB = AddBlipForCoord(hQ)
-        SetBlipSprite(hB,466)
-        SetBlipColour(hB,46)
-        SetBlipScale(hB,1.0)
-        BeginTextCommandSetBlipName("STRING")
-        AddTextComponentString("LS D.W.P")
-        EndTextCommandSetBlipName(hB)
-        Citizen.Wait(500)
-	end
-end)
-]]--
+
+if enableBlip then
+    Citizen.CreateThread(function()
+        local hQ = vector3(537.77, -1651.43, 29.26)
+        local hB = AddBlipForCoord(hQ)
+            SetBlipSprite(hB,466)
+            SetBlipColour(hB,46)
+            SetBlipScale(hB,1.0)
+            BeginTextCommandSetBlipName("STRING")
+            AddTextComponentString("LS D.W.P")
+            EndTextCommandSetBlipName(hB)
+    end)
+end
+
 jobMenu = nil
 -- ------------------------------------- job menu thread ----------------------------------------
 Citizen.CreateThread(function()
