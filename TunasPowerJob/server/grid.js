@@ -1,22 +1,20 @@
 console.log(`
-:::::::::   ::::::::  :::       ::: :::::::::: :::::::::        :::::::::::  ::::::::  :::::::::                              
-:+:    :+: :+:    :+: :+:       :+: :+:        :+:    :+:           :+:     :+:    :+: :+:    :+:                             
-+:+    +:+ +:+    +:+ +:+       +:+ +:+        +:+    +:+           +:+     +:+    +:+ +:+    +:+                             
-+#++:++#+ +:+     +:+ +#+  +#+  +:+ +#+ +:+    +#++#++:++:          +#+     +#+    +:+ +#++:++#+         
-+#+        +#+    +#+ +#+ +#+#+ +#+ +#+        +#+    +#+           +#+     +#+    +#+ +#+    +#+                             
-#+#        #+#    #+#  #+#+# #+#+#  #+#        #+#    #+#       #+# #+#     #+#    #+# #+#    #+#                             
-###         ########    ###   ###   ########## ###    ###        #####       ########  ########\n
---------------------------------------------------------------------------------------------------------
-><> Created by Tuna Terps => If you enjoy the script, go ahead and check out some of my other work <3 !
--------------------------------------------------------------------------------------------------------- 
-https://github.com/Tuna-Terps
-https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
---------------------------------------------------------------------------------------------------------`);
+^2:::::::::   ::::::::  :::       ::: :::::::::: :::::::::        :::::::::::  ::::::::  :::::::::                              
+^2:+:    :+: :+:    :+: :+:       :+: :+:        :+:    :+:           :+:     :+:    :+: :+:    :+:                             
+^2+:+    +:+ +:+    +:+ +:+       +:+ +:+        +:+    +:+           +:+     +:+    +:+ +:+    +:+                             
+^2+#++:++#+ +:+     +:+ +#+  +#+  +:+ +#+ +:+    +#++#++:++:          +#+     +#+    +:+ +#++:++#+         
+^2+#+        +#+    +#+ +#+ +#+#+ +#+ +#+        +#+    +#+           +#+     +#+    +#+ +#+    +#+                             
+^2#+#        #+#    #+#  #+#+# #+#+#  #+#        #+#    #+#       #+# #+#     #+#    #+# #+#    #+#                             
+^2###         ########    ###   ###   ########## ###    ###        #####       ########  ########\n
+^3--------------------------------------------------------------------------------------------------------
+^5><> Created by ^2Tuna Terps ^5=> If you enjoy the script, go ahead and check out some of my other work <3 !
+^3-------------------------------------------------------------------------------------------------------- 
+^5https://github.com/Tuna-Terps
+^5https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
+^3--------------------------------------------------------------------------------------------------------`);
 let ESX = null;
 let powerGrid = 1000;
 Wait = (ms) => new Promise(r => setTimeout(r, ms))
-
-//emit("esx:getSharedObject", (obj) => ESX = obj);
 
 //-----------------------------------------------//events//---------------------------------------------------//
 
@@ -47,14 +45,14 @@ setTick(async() => {
         emitNet('esx:showNotification', -1, `💡🔋 The Power Grid is at optimal capacity !! 🔋💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
     }
-    else if (powerGrid <= 700 && powerGrid >= 501 ){
+    else if (powerGrid <= 700 && powerGrid >= 601 ){
         emitNet('esx:showNotification', -1, `💡🔌 The Power Grid is unstable, power surges are common !! 🔌💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(5000)
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, false)}) 
         blackout = false;
     }
-    else if (powerGrid <= 500 && powerGrid >= 401) {     
+    else if (powerGrid <= 600 && powerGrid >= 401) {     
         emitNet('esx:showNotification', -1, `💡🔌 The city is experiencing rolling blackouts !! 🔌💡`);
         setImmediate(() => {emitNet('vSync:updateWeather', -1, cW, true)})
         await Wait(30000)
