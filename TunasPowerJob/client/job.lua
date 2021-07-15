@@ -42,7 +42,7 @@ end)
 -- track player coords, add blip
 Citizen.CreateThread(function()
     	while true do
-		player = PlayerPedId()
+	player = PlayerPedId()
         coords = GetEntityCoords(player)
         Citizen.Wait(500)
     end
