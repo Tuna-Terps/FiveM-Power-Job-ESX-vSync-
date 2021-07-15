@@ -194,7 +194,7 @@ function startJob()
                     	SetBlipRoute(mB1, false)
                     	RemoveBlip(mB1)
                         GridJob()
-			            n1 = true
+			n1 = true
                         return
                    end
            	end   
@@ -303,12 +303,12 @@ function FinishJob()
                 if tDist < 8 then
                     local p = PlayerPedId()
                     local v = GetVehiclePedIsIn(p)
-                    n1 = true
-                	Citizen.Wait(1000)
-                	SetBlipRoute(mB3, false)
-                	RemoveBlip(mB3)
+                    Citizen.Wait(1000)
+                    SetBlipRoute(mB3, false)
+                    RemoveBlip(mB3)
                     ESX.Game.DeleteVehicle(v)
                     TriggerServerEvent('grid:pay')
+		    n1 = true
                     Citizen.Wait(1000)
                     return
                 end
@@ -452,15 +452,15 @@ function SabotageAnim()
         NetworkAddEntityToSynchronisedScene(pIndex, bagscene, "anim@heists@ornate_bank@thermal_charge", "bag_thermal_charge", 4.0, -8.0, 1)
         NetworkStartSynchronisedScene(bagscene)
         exports['progressBars']:startUI(4500, 'Preparing to place bomb')
-	    TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
-	    FreezeEntityPosition(pIndex, true)
+	TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
+	FreezeEntityPosition(pIndex, true)
         Citizen.Wait(1500)
         local x, y, z = table.unpack(GetEntityCoords(pIndex))
         local bomb = CreateObject(GetHashKey("hei_prop_heist_thermite"), x, y, z + 0.2,  true,  true, true)
         SetEntityCollision(bomb, false, true)
         AttachEntityToEntity(bomb, pIndex, GetPedBoneIndex(pIndex, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-	    Citizen.Wait(4000)
-	    FreezeEntityPosition(pIndex, false)
+	Citizen.Wait(4000)
+	FreezeEntityPosition(pIndex, false)
         exports['progressBars']:startUI(12000, 'Charge has been placed !! - STAND BACK - !!')
         DetachEntity(bomb, 1, 1)
         FreezeEntityPosition(bomb, true)
