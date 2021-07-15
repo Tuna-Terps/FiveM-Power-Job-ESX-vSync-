@@ -13,6 +13,7 @@ https://www.youtube.com/channel/UCqoEtIuzJc3PGk9YX6kslNw
 ]]--
 
 enableBlip = true -- toggle whether youd like to use this blip; or your own :)
+canXL = true -- toggle whether youd like to use the third job :)
 
 ---------------------------------------------- variables -------------------------------------------
 ESX = nil
@@ -25,6 +26,8 @@ vC = nil
 local onJob = false
 local npcJob = false
 local onHeist = nil
+local xlJob = false
+
 -- ---------------------------------------------- loops --------------------------------------------
 
 Citizen.CreateThread(function()
@@ -97,6 +100,7 @@ function OpenJobMenu()
         elements = {
         {label = 'Local Grid Work', value = 'option_grid'},
         {label = 'Travel Grid Work', value = 'option_npc'},
+        {label = 'Travel Work XL', value = 'option_xl'},
     }
         }, function(data, menu)
         if data.current.value == 'option_grid' then
@@ -117,8 +121,18 @@ function OpenJobMenu()
             	return
             else
                 print('already on the clock ..')
-		return
+		        return
             end
+        elseif data.current.value == 'option_xl' then
+            menu.close()
+            ChangeClothes()
+            if onJob == false then
+                onJob = true
+                startJobXl()
+            else
+		        print('~r~error: ~w~already on the clock ....')
+                return
+            end    
         end
 	end)
 end
@@ -144,6 +158,13 @@ function TorchAnim()
                 FinishJob()
                 npcJob = false
             end
+            if xlJob and canXL then
+                TriggerServerEvent("grid:add", 200)
+                TriggerServerEvent("grid:pay")
+                FinishJob()
+                xlJob = false
+                return
+            end
             return
 		else 
 			print('youre already on the clock foh ...')
@@ -154,12 +175,12 @@ end
 -- -----------------------------------------local grid work----------------------------------------------
 
 function startJob()
-    local siteCoords = vector3(556.96, -1610.5, 28.03)
+    local sC1 = vector3(556.96, -1610.5, 28.03)
     local n1 = false
-    mB = AddBlipForCoord(siteCoords)
-    SetBlipRoute(mB, true)
-    SetBlipRouteColour(mB, 46)
-    SetBlipColour(mB, 46)
+    mB1 = AddBlipForCoord(sC1)
+    SetBlipRoute(mB1, true)
+    SetBlipRouteColour(mB1, 46)
+    SetBlipColour(mB1, 46)
     Citizen.CreateThread(function()
         local wait = 100
         while not n1 do
@@ -167,13 +188,13 @@ function startJob()
             local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 556.96, -1610.5, 28.03, false)
             	if tDist < 20 then
                     wait = 5
-                    DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                    DrawMarker(29, sC1, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
                     if tDist < 2 then
                     	Citizen.Wait(1000)
-                    	SetBlipRoute(mB, false)
-                    	RemoveBlip(mB)
+                    	SetBlipRoute(mB1, false)
+                    	RemoveBlip(mB1)
                         GridJob()
-			n1 = true
+			            n1 = true
                         return
                    end
            	end   
@@ -209,31 +230,31 @@ function startJobNpc()
     local p = PlayerPedId()
     local vC = vector3(571.46,-1653.56,26.85)
     local h = 105.65
-    local siteCoords = vector3(741.31, -1984.09, 30.05)
+    local sC2 = vector3(741.31, -1984.09, 30.05)
     local n2 = false
     ESX.Game.SpawnVehicle("burrito", vC, h , function(veh)
 	Citizen.Wait(1000)
         SetVehicleLivery(veh, 4)
         SetPedIntoVehicle(p, veh, -1)
         print(veh)
-        mB = AddBlipForCoord(siteCoords)
-        SetBlipRoute(mB, true)
-        SetBlipRouteColour(mB, 46)
-        SetBlipColour(mB, 46)
+        mB2 = AddBlipForCoord(sC2)
+        SetBlipRoute(mB2, true)
+        SetBlipRouteColour(mB2, 46)
+        SetBlipColour(mB2, 46)
         Citizen.CreateThread(function()
             local wait = 100
             while not n2 do
                 Citizen.Wait(wait)
-                local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, siteCoords, false)
+                local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, sC2, false)
                 if tDist < 20 then
                     wait = 5
-                    DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                    DrawMarker(29, sC2, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
                     if tDist < 2 then
                         Citizen.Wait(1000)
-                        SetBlipRoute(mB, false)
-                        RemoveBlip(mB)
+                        SetBlipRoute(mB2, false)
+                        RemoveBlip(mB2)
                         NpcJob()
-			n2 = true
+			            n2 = true
                         return
                     end
                 end   
@@ -264,28 +285,28 @@ function NpcJob()
 end
 
 function FinishJob()
-    local siteCoords = vector3(571.46,-1653.56,26.85)
-    local nearby = false
-    mB = AddBlipForCoord(siteCoords)
-    SetBlipRoute(mB, true)
-    SetBlipRouteColour(mB, 46)
-    SetBlipColour(mB, 46)
+    local sC3 = vector3(571.46,-1653.56,26.85)
+    local n1 = false
+    local mB3 = AddBlipForCoord(sC3)
+    SetBlipRoute(mB3, true)
+    SetBlipRouteColour(mB3, 46)
+    SetBlipColour(mB3, 46)
     Citizen.CreateThread(function()
         local wait = 100
         ESX.ShowHelpNotification("Return the vehicle to recieve an additional payment !", true, true, 5000)
-        while not nearby do
+        while not n1 do
             Citizen.Wait(wait)
-            local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, siteCoords, false)
+            local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, sC3, false)
             if tDist < 20 then
                 wait = 5
-                DrawMarker(29, siteCoords, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                DrawMarker(29, sC3, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
                 if tDist < 8 then
                     local p = PlayerPedId()
                     local v = GetVehiclePedIsIn(p)
-                    nearby = true
+                    n1 = true
                 	Citizen.Wait(1000)
-                	SetBlipRoute(mB, false)
-                	RemoveBlip(mB)
+                	SetBlipRoute(mB3, false)
+                	RemoveBlip(mB3)
                     ESX.Game.DeleteVehicle(v)
                     TriggerServerEvent('grid:pay')
                     Citizen.Wait(1000)
@@ -295,8 +316,70 @@ function FinishJob()
         end
     end)
 end
+-- ----------------------------------------XL Work -----------------------------------------------
 
--- ----------------------------------------SABOTAGE -----------------------------------------------
+function startJobXl()
+    local p = PlayerPedId()
+    local vC = vector3(571.46,-1653.56,26.85)
+    local h = 105.65
+    local sC4 = vector3(742.5, 129.95, 80.05)
+    local n2 = false
+    ESX.Game.SpawnVehicle("burrito", vC, h , function(veh1)
+	Citizen.Wait(500)
+        SetVehicleLivery(veh1, 4)
+        SetPedIntoVehicle(p, veh1, -1)
+        print(veh)
+        local mB4 = AddBlipForCoord(sC4)
+        SetBlipRoute(mB4, true)
+        SetBlipRouteColour(mB4, 46)
+        SetBlipColour(mB4, 46)
+        Citizen.CreateThread(function()
+            local wait = 100
+            while not n2 do
+                Citizen.Wait(wait)
+                local tDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, sC4, false)
+                if tDist < 20 then
+                    wait = 5
+                    DrawMarker(29, sC4, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+                    if tDist < 2 then
+                        n2 = true
+                        Citizen.Wait(1000)
+                        SetBlipRoute(mB4, false)
+                        RemoveBlip(mB4)
+                        XlJob()
+                        return
+                    end
+                end   
+            end
+        end)
+    end)
+end
+
+function XlJob()
+    local prop = GetClosestObjectOfType(742.5, 129.95, 80.05, 100.0, GetHashKey("prop_sub_trans_01a"), false)
+    local xC3 = GetEntityCoords(prop)
+    local xV2 = vector3(xC3)+vector3(0,0,5)
+    while true do
+        Wait(5)
+        local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xC3.x,xC3.y, xC3.z, false)
+        if uDist < 25 then
+            ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
+            DrawMarker(29, xV2, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+            if uDist < 3 then
+                ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to repair subframe", true, true, 5000)
+                if IsControlJustPressed(0,38) then
+                    TorchAnim()
+                    xlJob = true
+                    return
+                end
+            end
+        end
+    end  
+end
+-- ----------------------------------------END OF XL----------------------------------------------
+
+
+-- ----------------------------------------SABOTAGE-----------------------------------------------
 sMenu = nil
 RegisterNetEvent('grid:sabotage')
 AddEventHandler('grid:sabotage', function()
@@ -334,7 +417,6 @@ function Sabotage()
     while onHeist do
     	Wait(5)
     	local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z,567.17, -1581.83, 28.19, false)
-    	print (uDist .. "the fuckin udist")
     	if uDist < 10 then
     	    ESX.ShowHelpNotification("Locate the nearby *electric panel and SABOTAGE the power grid !", true, true, 5000)
         	if uDist < 1.5 then
