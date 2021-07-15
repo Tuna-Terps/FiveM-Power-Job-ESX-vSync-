@@ -161,7 +161,7 @@ function TorchAnim()
             if xlJob and canXL then
                 TriggerServerEvent("grid:add", 200)
                 TriggerServerEvent("grid:pay")
-                FinishJob2()
+                FinishJob()
                 xlJob = false
                 return
             end
