@@ -120,7 +120,7 @@ function OpenJobMenu()
             	return
             else
                 print('already on the clock ..')
-		        return
+		return
             end
         elseif data.current.value == 'option_xl' then
             menu.close()
@@ -129,7 +129,7 @@ function OpenJobMenu()
                 onJob = true
                 startJobXl()
             else
-		        print('~r~error: ~w~already on the clock ....')
+		print('~r~error: ~w~already on the clock ....')
                 return
             end    
         end
@@ -166,7 +166,7 @@ function TorchAnim()
             end
             return
 		else 
-			print('youre already on the clock foh ...')
+		print('youre already on the clock ...')
         end
     end)
 end
@@ -235,7 +235,6 @@ function startJobNpc()
 	Citizen.Wait(1000)
         SetVehicleLivery(veh, 4)
         SetPedIntoVehicle(p, veh, -1)
-        print(veh)
         mB2 = AddBlipForCoord(sC2)
         SetBlipRoute(mB2, true)
         SetBlipRouteColour(mB2, 46)
@@ -253,7 +252,7 @@ function startJobNpc()
                         SetBlipRoute(mB2, false)
                         RemoveBlip(mB2)
                         NpcJob()
-			            n2 = true
+			n2 = true
                         return
                     end
                 end   
@@ -510,8 +509,8 @@ end
 
 function ChangeClothes()
     TriggerEvent('esx_skin:setLastSkin', function(skin)
-        LastSkin = skin
-        --print(LastSkin)
+        skin = lastSkin
+        --print(lastSkin)
     end)
 
     TriggerEvent('skinchanger:getSkin', function(skin)
