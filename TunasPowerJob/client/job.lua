@@ -53,7 +53,7 @@ if enableBlip then
     Citizen.CreateThread(function()
         local hQ = vector3(537.77, -1651.43, 29.26)
         local hB = AddBlipForCoord(hQ)
-            SetBlipSprite(hB,466)
+            SetBlipSprite(hB,354)
             SetBlipColour(hB,46)
             SetBlipScale(hB,1.0)
             BeginTextCommandSetBlipName("STRING")
