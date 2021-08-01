@@ -42,7 +42,7 @@ end)
 -- track player coords, add blip
 Citizen.CreateThread(function()
     	while true do
-	player = PlayerPedId()
+		player = PlayerPedId()
         coords = GetEntityCoords(player)
         Citizen.Wait(500)
     end
@@ -55,7 +55,7 @@ if enableBlip then
         local hB = AddBlipForCoord(hQ)
             SetBlipSprite(hB,354)
             SetBlipColour(hB,46)
-            SetBlipScale(hB,1.0)
+            SetBlipScale(hB,1.7)
             BeginTextCommandSetBlipName("STRING")
             AddTextComponentString("LS D.W.P")
             EndTextCommandSetBlipName(hB)
@@ -70,12 +70,14 @@ Citizen.CreateThread(function()
         local s = true
         local dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 537.77, -1651.43, 29.26, false)
         if jobMenu ~= nil then
+            dist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, 537.77, -1651.43, 29.26, false)
             while jobMenu ~= nil and dist > 1.5 do jobMenu = nil Citizen.Wait(1) end
             if jobMenu == nil then ESX.UI.Menu.CloseAll() end
         else
             if dist < 18 then
                 s = false
                 if dist < 13 then
+                    DynaMarker(27,537.77, -1651.43, 28.3, 0.0, 0.0, 600, 100, true)
                     if dist < 1.5 then
                         DrawText3Ds(537.77, -1651.43, 29.26, "~r~[~g~E~r~]".." ~w~Open Job Menu")
                         if IsControlJustPressed(0, 38) then
@@ -100,6 +102,7 @@ function OpenJobMenu()
         {label = 'Local Grid Work', value = 'option_grid'},
         {label = 'Travel Grid Work', value = 'option_npc'},
         {label = 'Travel Work XL', value = 'option_xl'},
+        {label = 'Exit Menu', value = 'exit'},
     }
         }, function(data, menu)
         if data.current.value == 'option_grid' then
@@ -120,7 +123,7 @@ function OpenJobMenu()
             	return
             else
                 print('already on the clock ..')
-		return
+		        return
             end
         elseif data.current.value == 'option_xl' then
             menu.close()
@@ -129,9 +132,11 @@ function OpenJobMenu()
                 onJob = true
                 startJobXl()
             else
-		print('~r~error: ~w~already on the clock ....')
+		        print('~r~error: ~w~already on the clock ....')
                 return
-            end    
+            end
+        elseif data.current.value == 'exit' then
+            menu.close()    
         end
 	end)
 end
@@ -166,7 +171,7 @@ function TorchAnim()
             end
             return
 		else 
-		print('youre already on the clock ...')
+			print('youre already on the clock foh ...')
         end
     end)
 end
@@ -193,7 +198,7 @@ function startJob()
                     	SetBlipRoute(mB1, false)
                     	RemoveBlip(mB1)
                         GridJob()
-			n1 = true
+			            n1 = true
                         return
                    end
            	end   
@@ -206,20 +211,20 @@ function GridJob()
     local xC = GetEntityCoords(prop)
     local xV = vector3(xC)+vector3(0,0,5)
     while true do
-    Wait(5)
-    local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xC.x,xC.y, xC.z, false)
-    if uDist < 20 then
-        DrawMarker(29, xV, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
-        ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
-        if uDist < 3 then
-            ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to repair subframe", true, true, 5000)
-            if IsControlJustPressed(0,38) then
-                TorchAnim()
-                return
+        Wait(5)
+        local uDist = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, xC.x,xC.y, xC.z, false)
+        if uDist < 20 then
+            DrawMarker(29, xV, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 2.0, 2.0, 1.0, 0, 120, 0, 200, false, true, 2, false, false, false, false)
+            ESX.ShowHelpNotification("Locate the nearby subframes and repair the power grid !", true, true, 5000)
+            if uDist < 3 then
+                ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to repair subframe", true, true, 5000)
+                if IsControlJustPressed(0,38) then
+                    TorchAnim()
+                    return
+                end
             end
         end
-    end
-end  
+    end  
 end
 
 
@@ -235,6 +240,7 @@ function startJobNpc()
 	Citizen.Wait(1000)
         SetVehicleLivery(veh, 4)
         SetPedIntoVehicle(p, veh, -1)
+        print(veh)
         mB2 = AddBlipForCoord(sC2)
         SetBlipRoute(mB2, true)
         SetBlipRouteColour(mB2, 46)
@@ -252,7 +258,7 @@ function startJobNpc()
                         SetBlipRoute(mB2, false)
                         RemoveBlip(mB2)
                         NpcJob()
-			n2 = true
+			            n2 = true
                         return
                     end
                 end   
@@ -301,12 +307,12 @@ function FinishJob()
                 if tDist < 8 then
                     local p = PlayerPedId()
                     local v = GetVehiclePedIsIn(p)
-                    Citizen.Wait(1000)
-                    SetBlipRoute(mB3, false)
-                    RemoveBlip(mB3)
+                    n1 = true
+                	Citizen.Wait(1000)
+                	SetBlipRoute(mB3, false)
+                	RemoveBlip(mB3)
                     ESX.Game.DeleteVehicle(v)
                     TriggerServerEvent('grid:pay')
-		    n1 = true
                     Citizen.Wait(1000)
                     return
                 end
@@ -421,7 +427,7 @@ function Sabotage()
         		ESX.ShowHelpNotification("Press ~INPUT_CONTEXT~ to plant bomb!", true, true, 5000)
             	if IsControlJustPressed(0,38) then
             		SabotageAnim()
-                    	onHeist = false
+                    onHeist = false
         		end
         	end
 		end
@@ -450,15 +456,15 @@ function SabotageAnim()
         NetworkAddEntityToSynchronisedScene(pIndex, bagscene, "anim@heists@ornate_bank@thermal_charge", "bag_thermal_charge", 4.0, -8.0, 1)
         NetworkStartSynchronisedScene(bagscene)
         exports['progressBars']:startUI(4500, 'Preparing to place bomb')
-	TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
-	FreezeEntityPosition(pIndex, true)
+	    TaskPlayAnim(player, 'mini@repair', 'fixing_a_player', 8.0, -8, -1, 49, 0, 0, 0, 0)
+	    FreezeEntityPosition(pIndex, true)
         Citizen.Wait(1500)
         local x, y, z = table.unpack(GetEntityCoords(pIndex))
         local bomb = CreateObject(GetHashKey("hei_prop_heist_thermite"), x, y, z + 0.2,  true,  true, true)
         SetEntityCollision(bomb, false, true)
         AttachEntityToEntity(bomb, pIndex, GetPedBoneIndex(pIndex, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-	Citizen.Wait(4000)
-	FreezeEntityPosition(pIndex, false)
+	    Citizen.Wait(4000)
+	    FreezeEntityPosition(pIndex, false)
         exports['progressBars']:startUI(12000, 'Charge has been placed !! - STAND BACK - !!')
         DetachEntity(bomb, 1, 1)
         FreezeEntityPosition(bomb, true)
@@ -483,7 +489,7 @@ function SabotageAnim()
             return
         else
             ClearPedTasksImmediately(PlayerPedId())
-	    TriggerServerEvent("grid:sub", 1000) 
+	        TriggerServerEvent("grid:sub", 1000) 
             onHeist = false
             return
         end
@@ -492,6 +498,19 @@ function SabotageAnim()
 end
 
 -- -------------------------------------utility ------------------------------------------------------
+
+function DynaMarker(type,posX,posY,posZ,r,g,b,a,multi)
+
+    if multi == true then
+        -- enter
+        DrawMarker(type, posX,posY,posZ, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.0, 1.0, r, g, b, a, false, true, 2, false, false, false, false)
+       -- dollar sign
+        DrawMarker(29, posX,posY,posZ+2.5, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.0, 1.0, 0, 500, 0, 200, false, true, 2, false, false, false, false)
+    else
+        -- entering/exiting zone
+        DrawMarker(type, posX, posY,posZ, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 10.0, 5.0, r, g, b, a, false, true, 2, false, false, false, false)
+    end
+end
 
 
 function DrawMissionText(text)
@@ -509,8 +528,8 @@ end
 
 function ChangeClothes()
     TriggerEvent('esx_skin:setLastSkin', function(skin)
-        skin = lastSkin
-        --print(lastSkin)
+        LastSkin = skin
+        --print(LastSkin)
     end)
 
     TriggerEvent('skinchanger:getSkin', function(skin)
@@ -525,7 +544,7 @@ function ChangeClothes()
                 ['shoes_1'] = 66,   ['shoes_2'] = 0,
                 ['helmet_1'] = 64,  ['helmet_2'] = 6,
                 ['chain_1'] = 0,    ['chain_2'] = 0,
-                ['bproof_1'] = 21,     ['bproof_2'] = 1							
+                ['bproof_1'] = 21,  ['bproof_2'] = 1							
             }
             TriggerEvent('skinchanger:loadClothes', skin, clothesSkin)
         else
