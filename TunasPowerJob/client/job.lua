@@ -154,7 +154,7 @@ function TorchAnim()
             ClearPedTasksImmediately(PlayerPedId())
             TriggerServerEvent("grid:add", 5)
             TriggerServerEvent("grid:pay")
-            TriggerEvent('esx:showNotification', player,'Job Complete; Power Grid level +10')
+            TriggerEvent('esx:showNotification','Job Complete')
             onJob = false
             if npcJob then
                 print('this is a npc job')
