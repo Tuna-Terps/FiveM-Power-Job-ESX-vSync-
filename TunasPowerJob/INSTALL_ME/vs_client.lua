@@ -6,26 +6,15 @@ local timer = 0
 local freezeTime = false
 local blackout = false
 
-local weatherEnabled = true
-
 RegisterNetEvent('vSync:updateWeather')
 AddEventHandler('vSync:updateWeather', function(NewWeather, newblackout)
     CurrentWeather = NewWeather
     blackout = newblackout
 end)
 
-RegisterNetEvent("ToggleWeatherSync")
-AddEventHandler("ToggleWeatherSync", function(toggle)
-    print('toggling weather ...')
-    weatherEnabled = toggle
-    print(toggle)
-end)
-
 Citizen.CreateThread(function()
     SetArtificialLightsStateAffectsVehicles(false)
     while true do
-        if weatherEnabled then
-            --print(lastWeather)
             if lastWeather ~= CurrentWeather then
                 lastWeather = CurrentWeather
                 SetWeatherTypeOverTime(CurrentWeather, 15.0)
@@ -45,9 +34,6 @@ Citizen.CreateThread(function()
                 SetForceVehicleTrails(false)
                 SetForcePedFootstepsTracks(false)
             end
-        else
-            Wait(50)
-        end    
     end
 end)
 
