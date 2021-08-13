@@ -34,18 +34,15 @@ Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 		Citizen.Wait(0)
-    end
+    	end
 end)
 
-
--- track player coords
--- track player coords, add blip
 Citizen.CreateThread(function()
     	while true do
 		player = PlayerPedId()
-        coords = GetEntityCoords(player)
-        Citizen.Wait(500)
-    end
+        	coords = GetEntityCoords(player)
+        	Citizen.Wait(500)
+    	end
 end)
 
 
