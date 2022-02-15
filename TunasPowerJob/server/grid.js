@@ -101,7 +101,7 @@ RegisterCommand('power', function(source, args, a){
     a = parseInt(args[1], 10)
     if (!args[0]) return;
     if (isNaN(a)) return print('invalid argument, must be a number ....')
-    if (IsPlayerAceAllowed(source, "mod")) {
+    if (IsPlayerAceAllowed(source, "power")) {
         emit('esx:showNotification', source, 'Adjusting power grid levels ....')
         if (args[0] == 'add') {
             emit('grid:add', a);
