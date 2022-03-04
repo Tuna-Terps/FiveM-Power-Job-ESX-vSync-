@@ -90,7 +90,7 @@ exports('checkBl', (bC) => {
  ** ADD TO SERVER.CFG TO WHITELIST FOR COMMAND,  
     
     # Add this to your server cfg to allow admins/members to change the grid manually
-    add_ace powerAccess mod allow 
+    add_ace powerAccess power allow 
     # for each person add this
     add_principle identifier.steam:STEAM_ID_HERE powerAccess #NameOfPerson 
 
