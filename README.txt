@@ -30,7 +30,7 @@ If done correctly; your Power Grid will be up and running !!
 ** Features **
 1.) Power Job creates a grid that controls the city's power; As the power drains blackouts will become more frequent, until the grid collapses completely !
 -
-2.) The Power Grid must be maintained by players; there is 2 jobs set up for all players to contribute **NO JOB REQUIRED** (My reasoning is due to its importance, it should be something that everyone can contribute to without needing to switch jobs) *Doing the jobs adds to the grid's power level
+2.) The Power Grid must be maintained by players; there is 2 jobs  set up for all players to contribute **NO JOB REQUIRED** (My reasoning is due to its importance, it should be something that everyone can contribute to without needing to switch jobs) *Doing the jobs adds to the grid's power level
 -
 3.) Local Grid Work - A very short job that allows players to contribute a small amount towards the grid
 -
