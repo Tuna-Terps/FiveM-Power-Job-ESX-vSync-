@@ -90,7 +90,7 @@ end)
 -- ---------------------------------------- functions ----------------------------------------------
 function OpenJobMenu()
 	ESX.UI.Menu.CloseAll()
-	ESX.UI.Menu.Open('default', TunasPowerJob, 'power_grid_menu', {
+	ESX.UI.Menu.Open('default', "TunasPowerJob", 'power_grid_menu', {
         css = 'vestiaire',
         title = 'LS POWER GRID',
         align = 'top-right',
